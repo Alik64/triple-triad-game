@@ -19,7 +19,6 @@
         turn and is currently winning the game.
       </p>
       <br />
-
       <p>
         When a card changes to the player's color, this is called capturing a
         card. If it is not their turn, the player cannot capture any cards. A
@@ -29,7 +28,6 @@
         has the most cards of their color on the grid wins the game.
       </p>
       <br />
-
       <p>
         Each card in this mini-game features four numbers that form a cross in
         the top left corner. The numbers range from one through nine and A,
@@ -39,7 +37,6 @@
         is not in play unless there are also elemental icons on the grid.
       </p>
       <br />
-
       <p>
         A card may be played anywhere on the Triple Triad grid, including spaces
         where there is no adjacent card. However, due to the limited number of
@@ -47,7 +44,6 @@
         one another.
       </p>
       <br />
-
       <p>
         When one player's card is placed adjacent to the other player's card(s)
         on the grid, the touching sides are compared, and the high number of
@@ -59,7 +55,6 @@
         other cards belong to the opponent.{" "}
       </p>
       <br />
-
       <p>
         If the grid is filled with cards, and both players possess an equal
         number of cards of their color, a Draw will occur. Depending on the
