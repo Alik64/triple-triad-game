@@ -12,7 +12,6 @@
 }
 
 .hands {
-    border: 1px solid red;
     width: 20%;
     display: flex;
     flex-wrap: wrap;
@@ -22,7 +21,7 @@
 
 .card {
     border: 2px solid black;
-    background: white;
+    background: rgb(135, 105, 184);
     width: 220px;
     height: 220px;
     cursor: pointer;
