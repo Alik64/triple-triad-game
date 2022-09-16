@@ -1,0 +1,8 @@
+.root {
+    background: url(./assets/board-mat.jpg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+}
