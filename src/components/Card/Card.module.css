@@ -1,0 +1,7 @@
+.root {
+    border: 2px solid black;
+    background: rgb(135, 105, 184);
+    width: 220px;
+    height: 220px;
+    cursor: pointer;
+}

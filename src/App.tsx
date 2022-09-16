@@ -1,5 +1,6 @@
 import React from "react";
 import s from "./App.module.css";
+import Card from "./components/Card";
 
 function App() {
   const board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -9,7 +10,7 @@ function App() {
     <div className={s.root}>
       <div className={s.hands}>
         {enemy.map((item, index) => (
-          <div className={s.card}></div>
+          <Card className={s.card} />
         ))}
       </div>
       <div className={s.board}>
@@ -19,7 +20,7 @@ function App() {
       </div>
       <div className={s.hands}>
         {player.map((item, index) => (
-          <div className={s.card}></div>
+          <Card className={s.card} />
         ))}
       </div>
     </div>
