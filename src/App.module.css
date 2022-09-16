@@ -14,6 +14,22 @@
 .hands {
     border: 1px solid red;
     width: 20%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    border: 2px solid black;
+    background: white;
+    width: 220px;
+    height: 220px;
+    cursor: pointer;
+}
+
+.card+.card {
+    margin-top: -57%;
 }
 
 .board {

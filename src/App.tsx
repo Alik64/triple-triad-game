@@ -3,15 +3,25 @@ import s from "./App.module.css";
 
 function App() {
   const board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  const enemy = [0, 0, 0, 0, 0];
+  const player = [0, 0, 0, 0, 0];
   return (
     <div className={s.root}>
-      <div className={s.hands}></div>
+      <div className={s.hands}>
+        {enemy.map((item, index) => (
+          <div className={s.card}></div>
+        ))}
+      </div>
       <div className={s.board}>
         {board.map((item, index) => (
           <div key={index} className={s.cell}></div>
         ))}
       </div>
-      <div className={s.hands}></div>
+      <div className={s.hands}>
+        {player.map((item, index) => (
+          <div className={s.card}></div>
+        ))}
+      </div>
     </div>
   );
 }
