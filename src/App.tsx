@@ -30,7 +30,7 @@ function App() {
     <div className={s.root}>
       <div className={s.hands}>
         {enemy.map((item, index) => (
-          <Card className={s.card} />
+          <Card image={""} className={s.card} />
         ))}
       </div>
       <div className={s.board}>
@@ -40,7 +40,7 @@ function App() {
       </div>
       <div className={s.hands}>
         {player.map((item, index) => (
-          <Card className={s.card} />
+          <Card image={item.thumbnail.path} className={s.card} />
         ))}
       </div>
     </div>
