@@ -9,3 +9,20 @@
 .card+.card {
     margin-top: -57%;
 }
+
+.active {
+    transition: all 0.3s ease-in-out;
+}
+
+.right.active {
+    margin-left: -80px;
+    margin-bottom: 50px;
+    box-shadow: 1px 1px 10px rgb(74, 110, 200), 1px 1px 10px rgb(4, 25, 246);
+}
+
+.left.active {
+    margin-right: -80px;
+    box-shadow: 1px 1px 10px rgb(200, 74, 74), 1px 1px 10px rgb(246, 4, 4);
+    margin-bottom: 50px;
+
+}

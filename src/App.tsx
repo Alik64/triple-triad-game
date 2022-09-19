@@ -29,17 +29,14 @@ function App() {
 
   return (
     <div className={s.root}>
-      <div className={s.hands}>
-        {enemy.map((item, index) => (
-          <Card image={""} className={s.card} />
-        ))}
-      </div>
+      <Hands side="left" characters={player} />
+
       <div className={s.board}>
         {board.map((item, index) => (
           <div key={index} className={s.cell}></div>
         ))}
       </div>
-      <Hands characters={player} />
+      <Hands side="right" characters={player} />
     </div>
   );
 }

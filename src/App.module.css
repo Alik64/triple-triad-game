@@ -11,21 +11,8 @@
     justify-content: space-around;
 }
 
-.hands {
-    width: 20%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-}
-
-
-.card+.card {
-    margin-top: -57%;
-}
 
 .board {
-
     width: 50%;
     display: flex;
     flex-wrap: wrap;
