@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import s from "./App.module.css";
 
 import Card from "./components/Card";
+import Hands from "./components/Hands";
 import { Character } from "./interfaces";
 
 type JSONResponse = {
@@ -38,11 +39,7 @@ function App() {
           <div key={index} className={s.cell}></div>
         ))}
       </div>
-      <div className={s.hands}>
-        {player.map((item, index) => (
-          <Card image={item.thumbnail.path} className={s.card} />
-        ))}
-      </div>
+      <Hands characters={player} />
     </div>
   );
 }
