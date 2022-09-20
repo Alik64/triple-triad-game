@@ -7,7 +7,7 @@ interface CardProps {
   image: string;
   values: number[];
   className?: string;
-  onClick: (id: string | number) => void;
+  onClick?: (id: string | number) => void;
 }
 const Card: React.FC<CardProps> = ({
   id,

@@ -12,6 +12,7 @@
     color: rgb(158, 151, 205);
     font-size: 25px;
     position: relative;
+    top: 5%;
     width: 50px;
     height: 50px;
     margin-left: 10px;
@@ -26,11 +27,12 @@
 
 .values div:nth-child(1) {
     left: 50%;
+    top: -15%;
 }
 
 .values div:nth-child(2) {
     left: 50%;
-    top: 50%;
+    top: 66%;
 }
 
 .values div:nth-child(3) {

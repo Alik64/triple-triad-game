@@ -11,9 +11,12 @@ type JSONResponse = {
 };
 
 function App() {
-  const board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  const [board, setBoard] = useState<number[] | Character[]>([
+    0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]);
   const [enemy, setEnemy] = useState<Array<Character>>([]);
   const [player, setPlayer] = useState<Array<Character>>([]);
+  const [choiseCard, setChoiseCard] = useState<number | string | null>(null);
 
   useEffect(() => {
     const getPlayerCards = async () => {
@@ -38,16 +41,49 @@ function App() {
     getPlayerCards();
   }, []);
 
+  const handleHandsClick = (id: string | number) => {
+    setChoiseCard(id);
+  };
+
+  const handleCellClick = (index: number) => {
+    setBoard((prevState) => {
+      // @ts-ignore
+      const copyState: number[] | Character[] = [...prevState];
+      copyState[index] = player.find((item) => item.id === choiseCard) || 0;
+      return copyState;
+    });
+    setPlayer((prevState) =>
+      prevState.filter((item) => item.id !== choiseCard)
+    );
+    setChoiseCard(null);
+  };
+
   return (
     <div className={s.root}>
       <Hands side="left" characters={enemy} />
 
       <div className={s.board}>
-        {board.map((item, index) => (
-          <div key={index} className={s.cell}></div>
-        ))}
+        {board.map((item, index) => {
+          if (typeof item === "object") {
+            return (
+              <Card
+                className={s.cellCard}
+                id={item.id}
+                image={item.thumbnail.path}
+                values={item.attacks[1] as number[]}
+              />
+            );
+          }
+          return (
+            <div
+              onClick={() => handleCellClick(index)}
+              key={index}
+              className={s.cell}
+            />
+          );
+        })}
       </div>
-      <Hands side="right" characters={player} />
+      <Hands onClick={handleHandsClick} side="right" characters={player} />
     </div>
   );
 }

@@ -8,13 +8,14 @@ import Card from "../Card";
 interface HandsProps {
   side: "left" | "right";
   characters: Character[];
+  onClick?: (id: string | number) => void;
 }
 
-const Hands: React.FC<HandsProps> = ({ characters, side }) => {
+const Hands: React.FC<HandsProps> = ({ characters, side, onClick }) => {
   const [activeId, setActiveId] = useState<string | number | null>();
   const handleClick = (id: string | number) => {
-    console.log(id);
     setActiveId(id);
+    onClick && onClick(id);
   };
   return (
     <div className={s.root}>
