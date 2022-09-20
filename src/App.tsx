@@ -12,7 +12,7 @@ type JSONResponse = {
 
 function App() {
   const board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  const enemy = [0, 0, 0, 0, 0];
+  const [enemy, setEnemy] = useState<Array<Character>>([]);
   const [player, setPlayer] = useState<Array<Character>>([]);
 
   useEffect(() => {
@@ -21,7 +21,18 @@ function App() {
         "http://localhost:3004/api/v1/marvel/create"
       );
       const characters: JSONResponse = await response.json();
-      console.log(characters.data);
+
+      const responseEnemy = await fetch(
+        "http://localhost:3004/api/v1/marvel/game/start",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            characters: characters.data,
+          }),
+        }
+      );
+      const enemy: JSONResponse = await responseEnemy.json();
+      setEnemy(enemy.data);
       setPlayer(characters.data);
     };
     getPlayerCards();
@@ -29,7 +40,7 @@ function App() {
 
   return (
     <div className={s.root}>
-      <Hands side="left" characters={player} />
+      <Hands side="left" characters={enemy} />
 
       <div className={s.board}>
         {board.map((item, index) => (

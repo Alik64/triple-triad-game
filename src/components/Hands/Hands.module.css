@@ -17,7 +17,7 @@
 .right.active {
     margin-left: -80px;
     margin-bottom: 50px;
-    box-shadow: 1px 1px 10px rgb(74, 110, 200), 1px 1px 10px rgb(4, 25, 246);
+    box-shadow: 1px 1px 10px rgb(74, 185, 200), 1px 1px 10px rgb(4, 238, 246);
 }
 
 .left.active {
