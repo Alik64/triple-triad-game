@@ -11,7 +11,7 @@ type JSONResponse = {
 };
 
 function App() {
-  const [board, setBoard] = useState<number[] | Character[]>([
+  const [board, setBoard] = useState<(Character | number)[]>([
     0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
   const [enemy, setEnemy] = useState<Array<Character>>([]);
@@ -47,8 +47,7 @@ function App() {
 
   const handleCellClick = (index: number) => {
     setBoard((prevState) => {
-      // @ts-ignore
-      const copyState: number[] | Character[] = [...prevState];
+      const copyState: (Character | number)[] = [...prevState];
       copyState[index] = player.find((item) => item.id === choiseCard) || 0;
       return copyState;
     });
