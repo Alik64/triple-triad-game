@@ -5,10 +5,17 @@ import s from "./Card.module.css";
 interface CardProps {
   id: string | number;
   image: string;
+  values: number[];
   className?: string;
   onClick: (id: string | number) => void;
 }
-const Card: React.FC<CardProps> = ({ id, className, image, onClick }) => {
+const Card: React.FC<CardProps> = ({
+  id,
+  className,
+  image,
+  onClick,
+  values,
+}) => {
   const handleClick = () => {
     onClick && onClick(id);
   };
@@ -19,7 +26,13 @@ const Card: React.FC<CardProps> = ({ id, className, image, onClick }) => {
         backgroundImage: `url(${image})`,
       }}
       onClick={handleClick}
-    ></div>
+    >
+      <div className={s.values}>
+        {values.map((item, index) => (
+          <div key={index}>{item}</div>
+        ))}
+      </div>
+    </div>
   );
 };
 

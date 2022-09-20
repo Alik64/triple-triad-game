@@ -22,6 +22,7 @@ const Hands: React.FC<HandsProps> = ({ characters, side }) => {
         <Card
           key={item.id}
           id={item.id}
+          values={item.attacks[1] as number[]}
           image={item.thumbnail.path}
           className={cn(s.card, s[side], { [s.active]: item.id === activeId })}
           onClick={handleClick}
