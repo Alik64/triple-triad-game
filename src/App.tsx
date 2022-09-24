@@ -21,6 +21,7 @@ function App() {
   const [player, setPlayer] = useState<Array<Character>>([]);
   const [choiseCard, setChoiseCard] = useState<number | string | null>(null);
   const [background, setBackground] = useState<boolean>(true);
+
   useEffect(() => {
     const getPlayerCards = async () => {
       const response = await fetch(
@@ -48,7 +49,7 @@ function App() {
     setChoiseCard(id);
   };
 
-  const handleCellClick = (index: number) => {
+  const handleCellClick = async (index: number) => {
     setBoard((prevState) => {
       const copyState: (Character | number)[] = [...prevState];
       copyState[index] = player.find((item) => item.id === choiseCard) || 0;
@@ -69,6 +70,7 @@ function App() {
           if (typeof item === "object") {
             return (
               <Card
+                key={index}
                 className={s.cellCard}
                 id={item.id}
                 image={item.thumbnail.path}
