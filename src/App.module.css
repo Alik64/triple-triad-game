@@ -1,4 +1,5 @@
 .root {
+    position: relative;
     margin: 0 auto;
     padding: 50px 0;
     background: url(./assets/board-mat.jpg);
@@ -9,6 +10,13 @@
     height: 679px;
     display: flex;
     justify-content: space-around;
+}
+
+.root.board2 {
+    background: url(./assets/board-mat2.jpg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 
@@ -34,4 +42,99 @@
 .cellCard {
     max-width: 33%;
     max-height: 33%;
+}
+
+.backgroundBtn {
+    all: unset;
+}
+
+.backgroundBtn {
+    position: absolute;
+    bottom: -15%;
+    text-align: center;
+    border: solid 1px rgba(4, 238, 246, 0.3);
+    background: none;
+    color: rgba(4, 238, 246, 0.5);
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    font-weight: normal;
+    letter-spacing: 1.8px;
+    width: 200px;
+    height: 70px;
+    padding: 0;
+    transition: all 0.25s ease;
+    outline: none;
+}
+
+.backgroundBtn:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 60px;
+    height: 1px;
+    transform: translateY(-1px);
+    background: rgba(4, 238, 246, 1);
+    transition: all 0.25s ease;
+}
+
+.backgroundBtn:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 10%;
+    width: 60px;
+    height: 1px;
+    transform: translateY(1px);
+    background: rgba(0, 214, 252, 1);
+    transition: all 0.25s ease;
+}
+
+.backgroundBtn:hover {
+    box-shadow: 1px 1px 8px rgba(0, 214, 252, 0.3);
+    color: rgba(0, 214, 252, 1);
+    text-shadow: 0 0 8px rgba(0, 214, 252, 0.4);
+}
+
+.backgroundBtn:before :hover {
+    left: 0;
+    width: 20px;
+}
+
+.backgroundBtn:after:hover {
+    right: 0;
+    width: 20px;
+}
+
+.backgroundBtn:hover .backgroundBtn_span:before {
+    bottom: 0;
+}
+
+.backgroundBtn:hover .backgroundBtn_span:after {
+    top: 0;
+}
+
+
+.backgroundBtn_span:before {
+    content: "";
+    position: absolute;
+    bottom: 30%;
+    right: 0;
+    width: 1px;
+    height: 20px;
+    transform: translateX(1px);
+    background: rgba(0, 214, 252, 1);
+    transition: all 0.25s ease;
+}
+
+.backgroundBtn_span:after {
+    content: "";
+    position: absolute;
+    top: 30%;
+    left: 0;
+    width: 1px;
+    height: 20px;
+    transform: translateX(-1px);
+    background: rgba(0, 214, 252, 1);
+    transition: all 0.25s ease;
 }

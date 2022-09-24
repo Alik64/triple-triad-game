@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import s from "./App.module.css";
-
+import cn from "classnames";
 import Card from "./components/Card";
 import Hands from "./components/Hands";
 import { Character } from "./interfaces";
+import board1 from "./assets/board-mat.jpg";
+import board2 from "./assets/board-mat2.jpg";
+
+import s from "./App.module.css";
 
 type JSONResponse = {
   data: Array<Character>;
@@ -17,7 +20,7 @@ function App() {
   const [enemy, setEnemy] = useState<Array<Character>>([]);
   const [player, setPlayer] = useState<Array<Character>>([]);
   const [choiseCard, setChoiseCard] = useState<number | string | null>(null);
-
+  const [background, setBackground] = useState<boolean>(true);
   useEffect(() => {
     const getPlayerCards = async () => {
       const response = await fetch(
@@ -58,7 +61,7 @@ function App() {
   };
 
   return (
-    <div className={s.root}>
+    <div className={cn(s.root, { [s.board2]: background })}>
       <Hands side="left" characters={enemy} />
 
       <div className={s.board}>
@@ -82,7 +85,14 @@ function App() {
           );
         })}
       </div>
+
       <Hands onClick={handleHandsClick} side="right" characters={player} />
+      <button
+        onClick={() => setBackground((prev: boolean) => !prev)}
+        className={s.backgroundBtn}
+      >
+        <span className={s.backgroundBtn_span}></span>Change background
+      </button>
     </div>
   );
 }
