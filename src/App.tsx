@@ -24,6 +24,8 @@ function App() {
   const [player, setPlayer] = useState<Array<Character>>([]);
   const [choiseCard, setChoiseCard] = useState<number | string | null>(null);
   const [background, setBackground] = useState<boolean>(true);
+  const [enemyScore, setEnemyScore] = useState<number>(0);
+  const [playerScore, setPlayerScore] = useState<number>(0);
 
   console.log("render");
 
@@ -76,7 +78,7 @@ function App() {
     } else {
       return;
     }
-    console.log("params", params);
+    // console.log("params", params);
 
     setBoard((prevState) => {
       if (playerCard) {
@@ -103,12 +105,28 @@ function App() {
         typeof item === "object" ? { ...item.poke, holder: item.holder } : item
       )
     );
-    console.log(nextStep);
+    setPlayerScore(
+      nextStep.board.reduce((acc: number, item: any) => {
+        if (item.holder === "p1") {
+          acc++;
+        }
+        return acc;
+      }, 0)
+    );
+    // console.log(nextStep);
 
     if (nextStep.move !== null) {
       setTimeout(() => {
         setEnemy((prevState) =>
           prevState.filter((item) => item.id !== nextStep.move.poke.id)
+        );
+        setEnemyScore(
+          nextStep.board.reduce((acc: number, item: any) => {
+            if (item.holder === "p2") {
+              acc++;
+            }
+            return acc;
+          }, 0)
         );
       }, 500);
 
@@ -140,18 +158,22 @@ function App() {
   };
 
   function calculateResult(player1: any, player2: any) {
-    let sommeP1 = player1;
-    let sommeP2 = player2 + enemy.length;
-    console.log("P1", sommeP1, "P2", sommeP2);
+    setPlayerScore(player1);
+    setEnemyScore(player2 + enemy.length);
+
+    console.log("P1", player, "P2", enemy);
   }
 
   return (
     <div className={cn(s.root, { [s.board2]: background })}>
       <Hands side="left" characters={enemy} disabled />
-
+      <div className={s.enemyScore}>
+        <span>Score:</span>
+        <div>{enemyScore}</div>
+      </div>
       <div className={s.board}>
         {board.map((item, index) => {
-          console.log("item", item);
+          // console.log("item", item);
           if (typeof item === "object") {
             return (
               <Card
@@ -175,6 +197,10 @@ function App() {
       </div>
 
       <Hands onClick={handleHandsClick} side="right" characters={player} />
+      <div className={s.playerScore}>
+        <span>Score:</span>
+        <div>{playerScore}</div>
+      </div>
       <button
         onClick={() => setBackground((prev: boolean) => !prev)}
         className={s.backgroundBtn}

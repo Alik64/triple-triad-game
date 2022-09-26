@@ -21,11 +21,13 @@
 .right.active {
     margin-left: -80px;
     margin-bottom: 50px;
-    box-shadow: 1px 1px 10px rgb(74, 185, 200), 1px 1px 10px rgb(4, 238, 246);
+    border: 10px solid blue;
+    box-shadow: 1px 1px 10px rgb(74, 76, 200), 1px 1px 10px rgb(4, 8, 246);
 }
 
 .left.active {
     margin-right: -80px;
+    border: 10px solid red;
     box-shadow: 1px 1px 10px rgb(200, 74, 74), 1px 1px 10px rgb(246, 4, 4);
     margin-bottom: 50px;
 
