@@ -50,15 +50,53 @@ function App() {
   };
 
   const handleCellClick = async (index: number) => {
+    let params = {
+      hands: {
+        p1: player,
+        p2: enemy,
+      },
+      currentPlayer: "p1",
+      board,
+      move: {},
+    };
+
+    const playerCard = player.find((item) => item.id === choiseCard);
+
+    if (playerCard) {
+      params.move = {
+        id: playerCard.id,
+        hits: playerCard.attacks[1],
+        position: index + 1,
+      };
+    }
+    console.log("params", params);
+
     setBoard((prevState) => {
-      const copyState: (Character | number)[] = [...prevState];
-      copyState[index] = player.find((item) => item.id === choiseCard) || 0;
-      return copyState;
+      if (playerCard) {
+        const copyState: (Character | number)[] = [...prevState];
+        copyState[index] = playerCard;
+        return copyState;
+      }
+      return prevState;
     });
+
     setPlayer((prevState) =>
       prevState.filter((item) => item.id !== choiseCard)
     );
     setChoiseCard(null);
+
+    const responseGame = await fetch(
+      "http://localhost:3004/api/v1/marvel/game",
+      { method: "POST", body: JSON.stringify(params) }
+    );
+    const nextStep = await responseGame.json();
+
+    console.log(nextStep);
+    setBoard(
+      nextStep.board.map((item: any) =>
+        typeof item === "object" ? item.poke : item
+      )
+    );
   };
 
   return (
