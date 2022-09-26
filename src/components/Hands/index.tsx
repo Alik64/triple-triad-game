@@ -9,13 +9,21 @@ interface HandsProps {
   side: "left" | "right";
   characters: Character[];
   onClick?: (id: string | number) => void;
+  disabled?: boolean;
 }
 
-const Hands: React.FC<HandsProps> = ({ characters, side, onClick }) => {
+const Hands: React.FC<HandsProps> = ({
+  characters,
+  side,
+  onClick,
+  disabled = false,
+}) => {
   const [activeId, setActiveId] = useState<string | number | null>();
   const handleClick = (id: string | number) => {
-    setActiveId(id);
-    onClick && onClick(id);
+    if (!disabled) {
+      setActiveId(id);
+      onClick && onClick(id);
+    }
   };
   return (
     <div className={s.root}>

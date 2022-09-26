@@ -17,10 +17,15 @@ function App() {
   const [board, setBoard] = useState<(Character | number)[]>([
     0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
+  const [serverboard, setServerBoard] = useState<any[]>([
+    0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]);
   const [enemy, setEnemy] = useState<Array<Character>>([]);
   const [player, setPlayer] = useState<Array<Character>>([]);
   const [choiseCard, setChoiseCard] = useState<number | string | null>(null);
   const [background, setBackground] = useState<boolean>(true);
+
+  console.log("render");
 
   useEffect(() => {
     const getPlayerCards = async () => {
@@ -56,7 +61,7 @@ function App() {
         p2: enemy,
       },
       currentPlayer: "p1",
-      board,
+      board: serverboard,
       move: {},
     };
 
@@ -68,6 +73,8 @@ function App() {
         hits: playerCard.attacks[1],
         position: index + 1,
       };
+    } else {
+      return;
     }
     console.log("params", params);
 
@@ -90,24 +97,65 @@ function App() {
       { method: "POST", body: JSON.stringify(params) }
     );
     const nextStep = await responseGame.json();
-
-    console.log(nextStep);
+    setServerBoard(nextStep.board);
     setBoard(
-      nextStep.board.map((item: any) =>
-        typeof item === "object" ? item.poke : item
+      nextStep.oldBoard.map((item: any) =>
+        typeof item === "object" ? { ...item.poke, holder: item.holder } : item
       )
     );
+    console.log(nextStep);
+
+    if (nextStep.move !== null) {
+      setTimeout(() => {
+        setEnemy((prevState) =>
+          prevState.filter((item) => item.id !== nextStep.move.poke.id)
+        );
+      }, 500);
+
+      setTimeout(() => {
+        setBoard(
+          nextStep.board.map((item: any) =>
+            typeof item === "object"
+              ? { ...item.poke, holder: item.holder }
+              : item
+          )
+        );
+      }, 1000);
+    } else {
+      const nbP1 = nextStep.board.reduce((acc: number, item: any) => {
+        if (item.holder === "p1") {
+          acc++;
+        }
+        return acc;
+      }, 0);
+      const nbP2 = nextStep.board.reduce((acc: number, item: any) => {
+        if (item.holder === "p2") {
+          acc++;
+        }
+        return acc;
+      }, 0);
+
+      calculateResult(nbP1, nbP2);
+    }
   };
+
+  function calculateResult(player1: any, player2: any) {
+    let sommeP1 = player1;
+    let sommeP2 = player2 + enemy.length;
+    console.log("P1", sommeP1, "P2", sommeP2);
+  }
 
   return (
     <div className={cn(s.root, { [s.board2]: background })}>
-      <Hands side="left" characters={enemy} />
+      <Hands side="left" characters={enemy} disabled />
 
       <div className={s.board}>
         {board.map((item, index) => {
+          console.log("item", item);
           if (typeof item === "object") {
             return (
               <Card
+                holder={item?.holder}
                 key={index}
                 className={s.cellCard}
                 id={item.id}
@@ -132,6 +180,12 @@ function App() {
         className={s.backgroundBtn}
       >
         <span className={s.backgroundBtn_span}></span>Change background
+      </button>
+      <button
+        onClick={() => window.location.reload()}
+        className={cn(s.backgroundBtn, s.resetBtn)}
+      >
+        <span className={s.resetBtn_span}></span>Reset game
       </button>
     </div>
   );

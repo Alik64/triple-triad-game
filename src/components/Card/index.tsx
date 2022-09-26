@@ -8,6 +8,7 @@ interface CardProps {
   values: number[];
   className?: string;
   onClick?: (id: string | number) => void;
+  holder?: string;
 }
 const Card: React.FC<CardProps> = ({
   id,
@@ -15,13 +16,14 @@ const Card: React.FC<CardProps> = ({
   image,
   onClick,
   values,
+  holder,
 }) => {
   const handleClick = () => {
     onClick && onClick(id);
   };
   return (
     <div
-      className={cn(s.root, className)}
+      className={cn(s.root, className, s[holder as "p1" | "p2"])}
       style={{
         backgroundImage: `url(${image})`,
       }}

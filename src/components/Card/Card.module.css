@@ -31,15 +31,24 @@
 }
 
 .values div:nth-child(2) {
-    left: 50%;
-    top: 66%;
+    left: 100%;
+    top: 25%;
 }
 
 .values div:nth-child(3) {
-    top: 25%;
+    bottom: -15%;
+    left: 50%;
 }
 
 .values div:nth-child(4) {
     top: 25%;
-    left: 100%;
+    left: 0%;
+}
+
+.p1 {
+    border-color: blue;
+}
+
+.p2 {
+    border-color: red;
 }

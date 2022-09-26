@@ -12,6 +12,7 @@ export interface Character {
   urlCharacters: string;
   attacks: Array<number[] | number>;
   values: Values;
+  holder?: string;
 }
 
 export interface Thumbnail {
