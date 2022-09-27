@@ -141,6 +141,9 @@ const Game: React.FC = () => {
         );
       }, 1000);
     } else {
+      console.log(nextStep);
+      console.log("player pokes", nextStep.hands.p1.pokes.length);
+      console.log("enemy pokes", nextStep.hands.p2.pokes.length);
       const nbP1 = nextStep.board.reduce((acc: number, item: any) => {
         if (item.holder === "p1") {
           acc++;
@@ -153,29 +156,25 @@ const Game: React.FC = () => {
         }
         return acc;
       }, 0);
-
-      calculateResult(nbP1, nbP2);
+      setPlayerScore(nbP1 + nextStep.hands.p1.pokes.length);
+      setEnemyScore(nbP2 + nextStep.hands.p2.pokes.length);
       endgame();
     }
   };
 
-  function calculateResult(player1: any, player2: any) {
-    setPlayerScore(player1);
-    setEnemyScore(player2 + enemy.length);
-  }
-
   function endgame() {
-    if (playerScore === enemyScore) {
-      setModal(true);
-      setWinner("DRAW");
-    }
-    if (playerScore > enemyScore) {
+    console.log("player", playerScore + player.length);
+    console.log("enemy", enemyScore + enemy.length);
+
+    if (playerScore + player.length > enemyScore + enemy.length) {
       setModal(true);
       setWinner("BLUE TEAM");
-    }
-    if (playerScore < enemyScore) {
+    } else if (playerScore + player.length < enemyScore + enemy.length) {
       setModal(true);
       setWinner("RED TEAM");
+    } else if (playerScore + player.length == enemyScore + enemy.length) {
+      setModal(true);
+      setWinner("DRAW");
     }
   }
 
