@@ -1,0 +1,264 @@
+.root {
+    position: relative;
+    margin: 0 auto;
+    padding: 50px 0;
+    background: url(../../assets/board-mat.jpg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 1164px;
+    height: 679px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.root.board2 {
+    background: url(../../assets/board-mat2.jpg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+.board {
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cell {
+
+    width: 33%;
+    height: 33%;
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: rgba(255, 255, 255, .1);
+}
+
+.cellCard {
+    max-width: 33%;
+    max-height: 33%;
+}
+
+.backgroundBtn {
+    all: unset;
+    cursor: pointer;
+}
+
+.backgroundBtn {
+    position: absolute;
+    bottom: -15%;
+    text-align: center;
+    border: solid 1px rgba(4, 238, 246, 0.3);
+    background: none;
+    color: rgba(4, 238, 246, 0.5);
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    font-weight: normal;
+    letter-spacing: 1.8px;
+    width: 200px;
+    height: 70px;
+    padding: 0;
+    transition: all 0.25s ease;
+    outline: none;
+}
+
+.backgroundBtn:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 60px;
+    height: 1px;
+    transform: translateY(-1px);
+    background: rgba(4, 238, 246, 1);
+    transition: all 0.25s ease;
+}
+
+.backgroundBtn:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 10%;
+    width: 60px;
+    height: 1px;
+    transform: translateY(1px);
+    background: rgba(0, 214, 252, 1);
+    transition: all 0.25s ease;
+}
+
+.backgroundBtn:hover {
+    box-shadow: 1px 1px 8px rgba(0, 214, 252, 0.3);
+    color: rgba(0, 214, 252, 1);
+    text-shadow: 0 0 8px rgba(0, 214, 252, 0.4);
+}
+
+.backgroundBtn:before :hover {
+    left: 0;
+    width: 20px;
+}
+
+.backgroundBtn:after:hover {
+    right: 0;
+    width: 20px;
+}
+
+.backgroundBtn:hover .backgroundBtn_span:before {
+    bottom: 0;
+}
+
+.backgroundBtn:hover .backgroundBtn_span:after {
+    top: 0;
+}
+
+
+.backgroundBtn_span:before {
+    content: "";
+    position: absolute;
+    bottom: 30%;
+    right: 0;
+    width: 1px;
+    height: 20px;
+    transform: translateX(1px);
+    background: rgba(0, 214, 252, 1);
+    transition: all 0.25s ease;
+}
+
+.backgroundBtn_span:after {
+    content: "";
+    position: absolute;
+    top: 30%;
+    left: 0;
+    width: 1px;
+    height: 20px;
+    transform: translateX(-1px);
+    background: rgba(0, 214, 252, 1);
+    transition: all 0.25s ease;
+}
+
+.resetBtn {
+    left: 15%;
+    border: solid 1px rgba(246, 4, 4, 0.3);
+    color: rgba(246, 4, 4, 0.5);
+}
+
+.resetBtn:before {
+    background: rgb(246, 4, 4);
+}
+
+.resetBtn:after {
+
+    background: rgb(252, 0, 0);
+
+}
+
+.resetBtn:hover {
+    box-shadow: 1px 1px 8px rgba(252, 0, 0, 0.3);
+    color: rgb(252, 0, 0);
+    text-shadow: 0 0 8px rgba(252, 0, 0, 0.4);
+}
+
+.resetBtn:before :hover {
+    left: 0;
+    width: 20px;
+}
+
+.resetBtn:after:hover {
+    right: 0;
+    width: 20px;
+}
+
+.resetBtn:hover .resetBtn_span:before {
+    bottom: 0;
+}
+
+.resetBtn:hover .resetBtn_span:after {
+    top: 0;
+}
+
+
+.resetBtn_span:before {
+    content: "";
+    position: absolute;
+    bottom: 30%;
+    right: 0;
+    width: 1px;
+    height: 20px;
+    transform: translateX(1px);
+    background: rgb(252, 0, 0);
+    transition: all 0.25s ease;
+}
+
+.resetBtn_span:after {
+    content: "";
+    position: absolute;
+    top: 30%;
+    left: 0;
+    width: 1px;
+    height: 20px;
+    transform: translateX(-1px);
+    background: rgb(252, 0, 0);
+    transition: all 0.25s ease;
+}
+
+
+
+.playerScore {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 10%;
+    bottom: 0;
+    width: 130px;
+    height: 50px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.playerScore div {
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    background-color: #0800ff9e;
+    border: 5px solid blue;
+    box-shadow: 1px 1px 10px rgb(74, 76, 200), 1px 1px 10px rgb(4, 8, 246);
+}
+
+.playerScore span {
+    margin-right: 10px;
+}
+
+.enemyScore {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 5%;
+    bottom: 0;
+    width: 130px;
+    height: 50px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.enemyScore div {
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    background-color: #ff00009e;
+    border: 5px solid red;
+    box-shadow: 1px 1px 10px rgb(200, 74, 74), 1px 1px 10px rgb(246, 4, 4);
+}
+
+.enemyScore span {
+    margin-right: 10px;
+}
