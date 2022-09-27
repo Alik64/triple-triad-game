@@ -240,31 +240,3 @@
 .playerScore span {
     margin-right: 10px;
 }
-
-.enemyScore {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    left: 5%;
-    bottom: 0;
-    width: 130px;
-    height: 50px;
-    color: #fff;
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.enemyScore div {
-    width: 50px;
-    height: 50px;
-    display: grid;
-    place-items: center;
-    background-color: #ff00009e;
-    border: 5px solid red;
-    box-shadow: 1px 1px 10px rgb(200, 74, 74), 1px 1px 10px rgb(246, 4, 4);
-}
-
-.enemyScore span {
-    margin-right: 10px;
-}

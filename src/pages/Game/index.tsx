@@ -166,19 +166,14 @@ const Game: React.FC = () => {
 
   return (
     <div className={cn(s.root, { [s.board2]: background })}>
-      <Hands side="left" characters={enemy} disabled />
-      <div className={s.enemyScore}>
-        <span>Score:</span>
-        <div>{enemyScore}</div>
-      </div>
-
+      <Hands side="left" characters={enemy} disabled score={enemyScore} />
       <Board board={board} onClick={handleCellClick} />
-
-      <Hands onClick={handleHandsClick} side="right" characters={player} />
-      <div className={s.playerScore}>
-        <span>Score:</span>
-        <div>{playerScore}</div>
-      </div>
+      <Hands
+        onClick={handleHandsClick}
+        side="right"
+        characters={player}
+        score={playerScore}
+      />
       <section className={s.buttonContainer}>
         <button
           onClick={() => setBackground((prev: boolean) => !prev)}
@@ -198,25 +193,3 @@ const Game: React.FC = () => {
 };
 
 export default Game;
-
-// {board.map((item, index) => {
-//   if (typeof item === "object") {
-//     return (
-//       <Card
-//         holder={item?.holder}
-//         key={index}
-//         className={s.cellCard}
-//         id={item.id}
-//         image={item.thumbnail.path}
-//         values={item.attacks[1] as number[]}
-//       />
-//     );
-//   }
-//   return (
-//     <div
-//       onClick={() => handleCellClick(index)}
-//       key={index}
-//       className={s.cell}
-//     />
-//   );
-// })}
