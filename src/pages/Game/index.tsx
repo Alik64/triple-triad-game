@@ -5,6 +5,7 @@ import Hands from "../../components/Hands";
 import { Character } from "../../interfaces";
 
 import s from "./Game.module.css";
+import Board from "../../components/Board";
 
 type JSONResponse = {
   data: Array<Character>;
@@ -55,6 +56,7 @@ const Game: React.FC = () => {
   };
 
   const handleCellClick = async (index: number) => {
+    console.log("click");
     let params = {
       hands: {
         p1: player,
@@ -169,29 +171,8 @@ const Game: React.FC = () => {
         <span>Score:</span>
         <div>{enemyScore}</div>
       </div>
-      <div className={s.board}>
-        {board.map((item, index) => {
-          if (typeof item === "object") {
-            return (
-              <Card
-                holder={item?.holder}
-                key={index}
-                className={s.cellCard}
-                id={item.id}
-                image={item.thumbnail.path}
-                values={item.attacks[1] as number[]}
-              />
-            );
-          }
-          return (
-            <div
-              onClick={() => handleCellClick(index)}
-              key={index}
-              className={s.cell}
-            />
-          );
-        })}
-      </div>
+
+      <Board board={board} onClick={handleCellClick} />
 
       <Hands onClick={handleHandsClick} side="right" characters={player} />
       <div className={s.playerScore}>
@@ -217,3 +198,25 @@ const Game: React.FC = () => {
 };
 
 export default Game;
+
+// {board.map((item, index) => {
+//   if (typeof item === "object") {
+//     return (
+//       <Card
+//         holder={item?.holder}
+//         key={index}
+//         className={s.cellCard}
+//         id={item.id}
+//         image={item.thumbnail.path}
+//         values={item.attacks[1] as number[]}
+//       />
+//     );
+//   }
+//   return (
+//     <div
+//       onClick={() => handleCellClick(index)}
+//       key={index}
+//       className={s.cell}
+//     />
+//   );
+// })}

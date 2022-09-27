@@ -44,6 +44,12 @@
     max-height: 33%;
 }
 
+.buttonContainer {
+    position: absolute;
+    bottom: -20%;
+    display: flex;
+}
+
 .backgroundBtn {
     all: unset;
     cursor: pointer;

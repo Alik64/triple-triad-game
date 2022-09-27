@@ -1,0 +1,23 @@
+.board {
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cell {
+
+    width: 33%;
+    height: 33%;
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: rgba(255, 255, 255, .1);
+}
+
+.cellCard {
+    max-width: 33%;
+    max-height: 33%;
+}
