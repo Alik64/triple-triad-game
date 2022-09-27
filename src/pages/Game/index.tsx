@@ -201,13 +201,13 @@ const Game: React.FC = () => {
       <section className={s.buttonContainer}>
         <button
           onClick={() => setBackground((prev: boolean) => !prev)}
-          className={s.backgroundBtn}
+          className="btn"
         >
-          <span className={s.backgroundBtn_span}></span>Change background
+          <span className="btn_span"></span>Change background
         </button>
         <button
           onClick={() => window.location.reload()}
-          className={cn(s.backgroundBtn, s.resetBtn)}
+          className={cn("btn", s.resetBtn)}
         >
           <span className={s.resetBtn_span}></span>Reset game
         </button>

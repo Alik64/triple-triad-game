@@ -1,0 +1,37 @@
+.root {}
+
+.hydra {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    animation: glowRed 1s infinite alternate;
+}
+
+.capAmerica {
+    animation: glowBlue 1s infinite alternate;
+
+}
+
+@keyframes glowRed {
+    from {
+        filter: drop-shadow(0 0 20px red);
+
+    }
+
+    to {
+
+        filter: drop-shadow(0 0 0px red);
+    }
+}
+
+@keyframes glowBlue {
+    from {
+        filter: drop-shadow(0 0 20px blue);
+
+    }
+
+    to {
+
+        filter: drop-shadow(0 0 0px blue);
+    }
+}
