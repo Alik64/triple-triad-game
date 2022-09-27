@@ -32,3 +32,71 @@
     margin-bottom: 50px;
 
 }
+
+.playerScore {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 10%;
+    bottom: 0;
+    width: 130px;
+    height: 50px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.playerScore div {
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    background-color: #0800ff9e;
+    border: 5px solid blue;
+    box-shadow: 1px 1px 10px rgb(74, 76, 200), 1px 1px 10px rgb(4, 8, 246);
+}
+
+.playerScore span {
+    margin-right: 10px;
+}
+
+.score {
+    position: relative;
+    top: 5px;
+    left: -5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 130px;
+    height: 50px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.score div {
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+
+}
+
+.score.left div {
+
+    background-color: #ff00009e;
+    border: 5px solid red;
+    box-shadow: 1px 1px 10px rgb(200, 74, 74), 1px 1px 10px rgb(246, 4, 4);
+}
+
+.score.right div {
+
+    background-color: #0800ff9e;
+    border: 5px solid blue;
+    box-shadow: 1px 1px 10px rgb(74, 76, 200), 1px 1px 10px rgb(4, 8, 246);
+}
+
+.score span {
+    margin-right: 10px;
+}

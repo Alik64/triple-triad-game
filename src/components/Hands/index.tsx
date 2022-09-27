@@ -10,6 +10,7 @@ interface HandsProps {
   characters: Character[];
   onClick?: (id: string | number) => void;
   disabled?: boolean;
+  score: number;
 }
 
 const Hands: React.FC<HandsProps> = ({
@@ -17,6 +18,7 @@ const Hands: React.FC<HandsProps> = ({
   side,
   onClick,
   disabled = false,
+  score,
 }) => {
   const [activeId, setActiveId] = useState<string | number | null>();
   const handleClick = (id: string | number) => {
@@ -37,6 +39,10 @@ const Hands: React.FC<HandsProps> = ({
           onClick={handleClick}
         />
       ))}
+      <div className={cn(s.score, s[side])}>
+        <span>Score:</span>
+        <div>{score}</div>
+      </div>
     </div>
   );
 };
