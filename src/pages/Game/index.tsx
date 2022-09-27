@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import cn from "classnames";
-import Card from "../../components/Card";
-import Hands from "../../components/Hands";
+
+import Hand from "../../components/Hand";
 import { Character } from "../../interfaces";
 
 import s from "./Game.module.css";
@@ -166,9 +166,9 @@ const Game: React.FC = () => {
 
   return (
     <div className={cn(s.root, { [s.board2]: background })}>
-      <Hands side="left" characters={enemy} disabled score={enemyScore} />
+      <Hand side="left" characters={enemy} disabled score={enemyScore} />
       <Board board={board} onClick={handleCellClick} />
-      <Hands
+      <Hand
         onClick={handleHandsClick}
         side="right"
         characters={player}

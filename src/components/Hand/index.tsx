@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import cn from "classnames";
 import { Character } from "../../interfaces";
 
-import s from "./Hands.module.css";
+import s from "./Hand.module.css";
 import Card from "../Card";
 
 interface HandsProps {
@@ -13,7 +13,7 @@ interface HandsProps {
   score: number;
 }
 
-const Hands: React.FC<HandsProps> = ({
+const Hand: React.FC<HandsProps> = ({
   characters,
   side,
   onClick,
@@ -47,4 +47,4 @@ const Hands: React.FC<HandsProps> = ({
   );
 };
 
-export default Hands;
+export default Hand;
