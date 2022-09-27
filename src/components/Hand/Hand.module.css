@@ -1,4 +1,5 @@
 .root {
+    position: relative;
     width: 20%;
     display: flex;
     flex-wrap: wrap;
@@ -33,38 +34,12 @@
 
 }
 
-.playerScore {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    right: 10%;
-    bottom: 0;
-    width: 130px;
-    height: 50px;
-    color: #fff;
-    font-size: 24px;
-    font-weight: 700;
-}
 
-.playerScore div {
-    width: 50px;
-    height: 50px;
-    display: grid;
-    place-items: center;
-    background-color: #0800ff9e;
-    border: 5px solid blue;
-    box-shadow: 1px 1px 10px rgb(74, 76, 200), 1px 1px 10px rgb(4, 8, 246);
-}
-
-.playerScore span {
-    margin-right: 10px;
-}
 
 .score {
-    position: relative;
-    top: 5px;
-    left: -5px;
+    position: absolute;
+    bottom: -25%;
+    left: 15%;
     display: flex;
     justify-content: center;
     align-items: center;

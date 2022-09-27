@@ -56,7 +56,6 @@ const Game: React.FC = () => {
   };
 
   const handleCellClick = async (index: number) => {
-    console.log("click");
     let params = {
       hands: {
         p1: player,
@@ -78,7 +77,6 @@ const Game: React.FC = () => {
     } else {
       return;
     }
-    // console.log("params", params);
 
     setBoard((prevState) => {
       if (playerCard) {
@@ -177,7 +175,7 @@ const Game: React.FC = () => {
       <section className={s.buttonContainer}>
         <button
           onClick={() => setBackground((prev: boolean) => !prev)}
-          className="btn"
+          className={cn("btn", s.bgBtn)}
         >
           <span className="btn_span"></span>Change background
         </button>
