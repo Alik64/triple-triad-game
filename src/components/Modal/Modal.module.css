@@ -1,0 +1,34 @@
+.root {
+    position: absolute;
+    top: -20%;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.content {
+    background-image: url('../../assets/homepage.jpg');
+    width: 500px;
+    height: 500px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.content h2 {
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.content h3 {
+    font-size: 40px;
+    font-weight: 700;
+}

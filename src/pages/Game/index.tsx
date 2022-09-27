@@ -6,6 +6,7 @@ import { Character } from "../../interfaces";
 
 import s from "./Game.module.css";
 import Board from "../../components/Board";
+import Modal from "../../components/Modal";
 
 type JSONResponse = {
   data: Array<Character>;
@@ -25,6 +26,8 @@ const Game: React.FC = () => {
   const [background, setBackground] = useState<boolean>(true);
   const [enemyScore, setEnemyScore] = useState<number>(0);
   const [playerScore, setPlayerScore] = useState<number>(0);
+  const [modal, setModal] = useState<boolean>(false);
+  const [winner, setWinner] = useState<string | null>(null);
 
   console.log("render");
 
@@ -152,18 +155,33 @@ const Game: React.FC = () => {
       }, 0);
 
       calculateResult(nbP1, nbP2);
+      endgame();
     }
   };
 
   function calculateResult(player1: any, player2: any) {
     setPlayerScore(player1);
     setEnemyScore(player2 + enemy.length);
+  }
 
-    console.log("P1", player, "P2", enemy);
+  function endgame() {
+    if (playerScore === enemyScore) {
+      setModal(true);
+      setWinner("DRAW");
+    }
+    if (playerScore > enemyScore) {
+      setModal(true);
+      setWinner("BLUE TEAM");
+    }
+    if (playerScore < enemyScore) {
+      setModal(true);
+      setWinner("RED TEAM");
+    }
   }
 
   return (
     <div className={cn(s.root, { [s.board2]: background })}>
+      {modal && <Modal winner={winner} />}
       <Hand side="left" characters={enemy} disabled score={enemyScore} />
       <Board board={board} onClick={handleCellClick} />
       <Hand
