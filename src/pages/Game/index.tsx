@@ -106,28 +106,13 @@ const Game: React.FC = () => {
         typeof item === "object" ? { ...item.poke, holder: item.holder } : item
       )
     );
-    setPlayerScore(
-      nextStep.board.reduce((acc: number, item: any) => {
-        if (item.holder === "p1") {
-          acc++;
-        }
-        return acc;
-      }, 0)
-    );
+
     // console.log(nextStep);
 
     if (nextStep.move !== null) {
       setTimeout(() => {
         setEnemy((prevState) =>
           prevState.filter((item) => item.id !== nextStep.move.poke.id)
-        );
-        setEnemyScore(
-          nextStep.board.reduce((acc: number, item: any) => {
-            if (item.holder === "p2") {
-              acc++;
-            }
-            return acc;
-          }, 0)
         );
       }, 500);
 
@@ -138,6 +123,22 @@ const Game: React.FC = () => {
               ? { ...item.poke, holder: item.holder }
               : item
           )
+        );
+        setPlayerScore(
+          nextStep.board.reduce((acc: number, item: any) => {
+            if (item.holder === "p1") {
+              acc++;
+            }
+            return acc;
+          }, 0)
+        );
+        setEnemyScore(
+          nextStep.board.reduce((acc: number, item: any) => {
+            if (item.holder === "p2") {
+              acc++;
+            }
+            return acc;
+          }, 0)
         );
       }, 1000);
     } else {
