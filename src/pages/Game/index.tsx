@@ -7,6 +7,7 @@ import { Character } from "../../interfaces";
 import s from "./Game.module.css";
 import Board from "../../components/Board";
 import Modal from "../../components/Modal";
+import Preloader from "../../components/Preloader";
 
 type JSONResponse = {
   data: Array<Character>;
@@ -28,18 +29,20 @@ const Game: React.FC = () => {
   const [playerScore, setPlayerScore] = useState<number>(0);
   const [modal, setModal] = useState<boolean>(false);
   const [winner, setWinner] = useState<string>("");
+  const [isLoading, setLoading] = useState<boolean>(true);
 
   console.log("render");
 
   useEffect(() => {
     const getPlayerCards = async () => {
+      setLoading(true);
       const response = await fetch(
-        "http://localhost:3004/api/v1/marvel/create"
+        "https://ttgapi.herokuapp.com/api/v1/marvel/create"
       );
       const characters: JSONResponse = await response.json();
 
       const responseEnemy = await fetch(
-        "http://localhost:3004/api/v1/marvel/game/start",
+        "https://ttgapi.herokuapp.com/api/v1/marvel/game/start",
         {
           method: "POST",
           body: JSON.stringify({
@@ -52,6 +55,7 @@ const Game: React.FC = () => {
       setPlayer(characters.data);
     };
     getPlayerCards();
+    setLoading(false);
   }, []);
 
   const handleHandsClick = (id: string | number) => {
@@ -96,7 +100,7 @@ const Game: React.FC = () => {
     setChoiseCard(null);
 
     const responseGame = await fetch(
-      "http://localhost:3004/api/v1/marvel/game",
+      "https://ttgapi.herokuapp.com/api/v1/marvel/game",
       { method: "POST", body: JSON.stringify(params) }
     );
     const nextStep = await responseGame.json();
@@ -108,11 +112,9 @@ const Game: React.FC = () => {
     );
 
     if (nextStep.move !== null) {
-      setTimeout(() => {
-        setEnemy((prevState) =>
-          prevState.filter((item) => item.id !== nextStep.move.poke.id)
-        );
-      }, 500);
+      setEnemy((prevState) =>
+        prevState.filter((item) => item.id !== nextStep.move.poke.id)
+      );
 
       setTimeout(() => {
         setBoard(
@@ -138,7 +140,7 @@ const Game: React.FC = () => {
             return acc;
           }, 0)
         );
-      }, 1000);
+      }, 500);
     } else {
       console.log(nextStep);
       console.log("player pokes", nextStep.hands.p1.pokes.length);
@@ -175,6 +177,9 @@ const Game: React.FC = () => {
       setModal(true);
       setWinner("draw");
     }
+  }
+  if (isLoading) {
+    return <Preloader />;
   }
 
   return (
