@@ -20,7 +20,7 @@ const Home: React.FC = () => {
       </section>
       <section className={s.btnsContainer}>
         <button
-          onClick={() => navigate("/game")}
+          onClick={() => navigate("/rules")}
           className={cn("btn", s.lfgBtn)}
         >
           <span className="btn_span"></span>See rules
