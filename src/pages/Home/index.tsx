@@ -18,15 +18,15 @@ const Home: React.FC = () => {
         />
         <h1 className={s.title}>Triple triad game</h1>
       </section>
-      <section className={s.btnsContainer} id="kaka">
+      <section className={s.btnsContainer}>
         <button
           onClick={() => navigate("/game")}
           className={cn("btn", s.lfgBtn)}
         >
-          <span className="btn_span"></span>Let's go
+          <span className="btn_span"></span>See rules
         </button>
         <button onClick={() => navigate("/game")} className="btn">
-          <span className="btn_span"></span>See rules
+          <span className="btn_span"></span>Let's go
         </button>
       </section>
     </div>

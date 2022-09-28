@@ -27,7 +27,7 @@ const Game: React.FC = () => {
   const [enemyScore, setEnemyScore] = useState<number>(0);
   const [playerScore, setPlayerScore] = useState<number>(0);
   const [modal, setModal] = useState<boolean>(false);
-  const [winner, setWinner] = useState<string | null>(null);
+  const [winner, setWinner] = useState<string>("");
 
   console.log("render");
 
@@ -107,8 +107,6 @@ const Game: React.FC = () => {
       )
     );
 
-    // console.log(nextStep);
-
     if (nextStep.move !== null) {
       setTimeout(() => {
         setEnemy((prevState) =>
@@ -169,13 +167,13 @@ const Game: React.FC = () => {
 
     if (playerScore + player.length > enemyScore + enemy.length) {
       setModal(true);
-      setWinner("BLUE TEAM");
+      setWinner("blue");
     } else if (playerScore + player.length < enemyScore + enemy.length) {
       setModal(true);
-      setWinner("RED TEAM");
+      setWinner("red");
     } else if (playerScore + player.length == enemyScore + enemy.length) {
       setModal(true);
-      setWinner("DRAW");
+      setWinner("draw");
     }
   }
 
