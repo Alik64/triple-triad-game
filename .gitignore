@@ -25,4 +25,4 @@ yarn-error.log*
 # custom
 
 src/assets
-src/Modal/images
+src/components/Modal/images
