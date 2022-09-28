@@ -16,7 +16,7 @@ const Home: React.FC = () => {
           src={logoGame}
           alt="TripleTriad game logo"
         />
-        <h1 className={s.title}>Triple triad game</h1>
+        <h1 className={s.title}>Triple Triad Game</h1>
       </section>
       <section className={s.btnsContainer}>
         <button
