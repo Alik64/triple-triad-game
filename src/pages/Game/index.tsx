@@ -8,13 +8,15 @@ import Board from "../../components/Board";
 import Modal from "../../components/Modal";
 import Preloader from "../../components/Preloader";
 import { Character } from "../../interfaces";
-
+import { useDispatch } from "react-redux";
+import { toggleModal } from "../../redux/characterSlice";
 type JSONResponse = {
   data: Array<Character>;
   errors?: Array<{ message: string }>;
 };
 
 const Game: React.FC = () => {
+  const dispatch = useDispatch();
   const [board, setBoard] = useState<(Character | number)[]>([
     0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
@@ -210,6 +212,7 @@ const Game: React.FC = () => {
         >
           <span className={s.resetBtn_span}></span>Reset game
         </button>
+        <button onClick={() => dispatch(toggleModal())}>XXX</button>
       </section>
     </div>
   );

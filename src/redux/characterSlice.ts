@@ -32,8 +32,12 @@ const initialState: initialStateType = {
 const characterSlice = createSlice({
   name: "characters",
   initialState,
-  reducers: {},
+  reducers: {
+    toggleModal: (state: initialStateType) => {
+      state.isModalOpen = !state.isModalOpen;
+    },
+  },
   extraReducers: {},
 });
-
+export const { toggleModal } = characterSlice.actions;
 export default characterSlice.reducer;
