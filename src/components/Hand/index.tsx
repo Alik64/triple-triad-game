@@ -29,7 +29,7 @@ const Hand: React.FC<HandsProps> = ({
   };
   return (
     <div className={s.root}>
-      {characters.map((item) => (
+      {characters?.map((item) => (
         <Card
           key={item.id}
           id={item.id}
