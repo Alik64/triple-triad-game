@@ -1,7 +1,7 @@
   <div align='center'>
 
-Deployed at [https://triple-triad.netlify.app/]
 #About game
+
 <p>
 Triple Triad is played on a blank 3-by-3 square game board. Squall plays
 against one opponent at a time in turn-based gameplay. Both players have

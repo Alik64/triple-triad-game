@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import cn from "classnames";
 
 import Hand from "../../components/Hand";
-import { Character } from "../../interfaces";
 
 import s from "./Game.module.css";
 import Board from "../../components/Board";
 import Modal from "../../components/Modal";
 import Preloader from "../../components/Preloader";
+import { Character } from "../../interfaces";
 
 type JSONResponse = {
   data: Array<Character>;
@@ -18,16 +18,19 @@ const Game: React.FC = () => {
   const [board, setBoard] = useState<(Character | number)[]>([
     0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
+
   const [serverboard, setServerBoard] = useState<any[]>([
     0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
+
+  const [background, setBackground] = useState<boolean>(true);
+  const [modal, setModal] = useState<boolean>(false);
+
   const [enemy, setEnemy] = useState<Array<Character>>([]);
   const [player, setPlayer] = useState<Array<Character>>([]);
   const [choiseCard, setChoiseCard] = useState<number | string | null>(null);
-  const [background, setBackground] = useState<boolean>(true);
   const [enemyScore, setEnemyScore] = useState<number>(0);
   const [playerScore, setPlayerScore] = useState<number>(0);
-  const [modal, setModal] = useState<boolean>(false);
   const [winner, setWinner] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>(true);
 
@@ -103,6 +106,7 @@ const Game: React.FC = () => {
       "https://ttgapi.herokuapp.com/api/v1/marvel/game",
       { method: "POST", body: JSON.stringify(params) }
     );
+
     const nextStep = await responseGame.json();
     setServerBoard(nextStep.board);
     setBoard(
