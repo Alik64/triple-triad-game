@@ -70,8 +70,8 @@ export const launchGameThunk = createAsyncThunk(
   async (params: {}, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        // "https://ttgapi.herokuapp.com/api/v1/marvel/game",
-        "http://0.0.0.0:3004/api/v1/marvel/game",
+        "https://ttgapi.herokuapp.com/api/v1/marvel/game",
+
         {
           method: "POST",
           body: JSON.stringify(params),
