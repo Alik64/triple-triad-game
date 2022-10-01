@@ -70,13 +70,15 @@ export const launchGameThunk = createAsyncThunk(
   async (params: {}, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        "https://ttgapi.herokuapp.com/api/v1/marvel/game",
+        // "https://ttgapi.herokuapp.com/api/v1/marvel/game",
+        "http://0.0.0.0:3004/api/v1/marvel/game",
         {
           method: "POST",
           body: JSON.stringify(params),
         }
       );
       const nextStep = await response.json();
+      return nextStep;
     } catch (error) {
       return rejectWithValue({ message: "The error" });
     }
@@ -149,7 +151,63 @@ const characterSlice = createSlice({
       action: any
     ) => {
       state.isLoading = false;
-      console.log(action);
+      state.serverBoard = action.payload.board;
+      state.board = action.payload.oldBoard.map((item: any) =>
+        typeof item === "object" ? { ...item.poke, holder: item.holder } : item
+      );
+      if (action.payload.move !== null) {
+        state.enemyCards = state.enemyCards.filter(
+          (item) => item.id !== action.payload.move.poke.id
+        );
+        state.board = action.payload.board.map((item: any) =>
+          typeof item === "object"
+            ? { ...item.poke, holder: item.holder }
+            : item
+        );
+        state.playerScore = action.payload.board.reduce(
+          (acc: number, item: any) => {
+            if (item.holder === "p1") {
+              acc++;
+            }
+            return acc;
+          },
+          0
+        );
+
+        state.enemyScore = action.payload.board.reduce(
+          (acc: number, item: any) => {
+            if (item.holder === "p2") {
+              acc++;
+            }
+            return acc;
+          },
+          0
+        );
+      } else {
+        const nbP1 = action.payload.board.reduce((acc: number, item: any) => {
+          if (item.holder === "p1") {
+            acc++;
+          }
+          return acc;
+        }, 0);
+        const nbP2 = action.payload.board.reduce((acc: number, item: any) => {
+          if (item.holder === "p2") {
+            acc++;
+          }
+          return acc;
+        }, 0);
+        state.playerScore = nbP1 + action.payload.hands.p1.pokes.length;
+        state.enemyScore = nbP2 + action.payload.hands.p2.pokes.length;
+
+        if (state.playerScore > state.enemyScore) {
+          state.winner = "blue";
+        } else if (state.playerScore < state.enemyScore) {
+          state.winner = "red";
+        } else if (state.playerScore === state.enemyScore) {
+          state.winner = "draw";
+        }
+        state.isModalOpen = true;
+      }
     },
     [launchGameThunk.rejected.type]: (state: InitialStateType, action: any) => {
       console.log(action);
