@@ -1,14 +1,13 @@
-import { AsyncThunk, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Character } from "../interfaces";
 
-export interface initialStateType {
+export interface InitialStateType {
   board: (Character | number)[];
   serverBoard: (Character | number)[];
   playerCards: Character[];
   enemyCards: Character[];
   playerScore: number;
   enemyScore: number;
-  chosenCard: number | string | null;
   winner: string;
   isLoading: boolean;
   isModalOpen: boolean;
@@ -19,14 +18,13 @@ type JSONResponse = {
   errors?: Array<{ message: string }>;
 };
 
-const initialState: initialStateType = {
+const initialState: InitialStateType = {
   board: [0, 0, 0, 0, 0, 0, 0, 0, 0],
   serverBoard: [0, 0, 0, 0, 0, 0, 0, 0, 0],
   playerCards: [],
   enemyCards: [],
   playerScore: 0,
   enemyScore: 0,
-  chosenCard: null,
   winner: "",
   isLoading: false,
   isModalOpen: false,
@@ -67,56 +65,98 @@ export const getEnemyCardsThunk: any = createAsyncThunk(
   }
 );
 
+export const launchGameThunk = createAsyncThunk(
+  "characters/launchGame",
+  async (params: {}, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        "https://ttgapi.herokuapp.com/api/v1/marvel/game",
+        {
+          method: "POST",
+          body: JSON.stringify(params),
+        }
+      );
+      const nextStep = await response.json();
+    } catch (error) {
+      return rejectWithValue({ message: "The error" });
+    }
+  }
+);
+
 const characterSlice = createSlice({
   name: "characters",
   initialState,
   reducers: {
-    toggleModal: (state: initialStateType) => {
+    toggleModal: (state: InitialStateType) => {
       state.isModalOpen = !state.isModalOpen;
+    },
+    setBoard: (state: InitialStateType, action: any) => {
+      state.board[action.payload.index] = action.payload.playerCard;
+    },
+    setPlayerCards: (state: InitialStateType, action: any) => {
+      state.playerCards = state.playerCards.filter(
+        (item) => item.id !== action.payload
+      );
     },
   },
   extraReducers: {
     //getPlayerCards
-    [getPlayerCardsThunk.pending.type]: (state: initialStateType) => {
+    [getPlayerCardsThunk.pending.type]: (state: InitialStateType) => {
       state.isLoading = true;
     },
     [getPlayerCardsThunk.fulfilled.type]: (
-      state: initialStateType,
-      action: any
+      state: InitialStateType,
+      action: PayloadAction<Character[]>
     ) => {
       state.playerCards = action.payload;
       state.isLoading = false;
       console.log(action);
     },
     [getPlayerCardsThunk.rejected.type]: (
-      state: initialStateType,
-      action: any
+      state: InitialStateType,
+      action: PayloadAction<string>
     ) => {
       console.log(action);
       state.error = action.payload;
       state.isLoading = false;
     },
     //getEnemyCards
-    [getEnemyCardsThunk.pending.type]: (state: initialStateType) => {
+    [getEnemyCardsThunk.pending.type]: (state: InitialStateType) => {
       state.isLoading = true;
     },
     [getEnemyCardsThunk.fulfilled.type]: (
-      state: initialStateType,
-      action: any
+      state: InitialStateType,
+      action: PayloadAction<Character[]>
     ) => {
       state.enemyCards = action.payload;
       state.isLoading = false;
       console.log(action);
     },
     [getEnemyCardsThunk.rejected.type]: (
-      state: initialStateType,
+      state: InitialStateType,
+      action: PayloadAction<string>
+    ) => {
+      console.log(action);
+      state.error = action.payload;
+      state.isLoading = false;
+    },
+    //LaunchGame
+    [launchGameThunk.pending.type]: (state: InitialStateType) => {
+      state.isLoading = true;
+    },
+    [launchGameThunk.fulfilled.type]: (
+      state: InitialStateType,
       action: any
     ) => {
+      state.isLoading = false;
+      console.log(action);
+    },
+    [launchGameThunk.rejected.type]: (state: InitialStateType, action: any) => {
       console.log(action);
       state.error = action.payload;
       state.isLoading = false;
     },
   },
 });
-export const { toggleModal } = characterSlice.actions;
+export const { toggleModal, setBoard, setPlayerCards } = characterSlice.actions;
 export default characterSlice.reducer;
