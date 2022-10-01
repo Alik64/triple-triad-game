@@ -18,7 +18,7 @@ const Card: React.FC<CardProps> = ({
   values,
   holder,
 }) => {
-  const handleClick = () => {
+  const handleClick: React.MouseEventHandler<HTMLDivElement> = () => {
     onClick && onClick(id);
   };
   return (

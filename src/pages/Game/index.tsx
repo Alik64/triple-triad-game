@@ -1,65 +1,67 @@
 import React, { useEffect, useState } from "react";
-import cn from "classnames";
 
 import Hand from "../../components/Hand";
-import { Character } from "../../interfaces";
-
-import s from "./Game.module.css";
 import Board from "../../components/Board";
 import Modal from "../../components/Modal";
 import Preloader from "../../components/Preloader";
 
-type JSONResponse = {
-  data: Array<Character>;
-  errors?: Array<{ message: string }>;
-};
+import { Character } from "../../interfaces";
+
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../redux/store";
+import {
+  getEnemyCardsThunk,
+  getPlayerCardsThunk,
+  launchGameThunk,
+  setBoard,
+  setPlayerCards,
+  toggleModal,
+} from "../../redux/characterSlice";
+
+import cn from "classnames";
+import s from "./Game.module.css";
 
 const Game: React.FC = () => {
-  const [board, setBoard] = useState<(Character | number)[]>([
-    0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ]);
-  const [serverboard, setServerBoard] = useState<any[]>([
-    0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ]);
-  const [enemy, setEnemy] = useState<Array<Character>>([]);
-  const [player, setPlayer] = useState<Array<Character>>([]);
-  const [choiseCard, setChoiseCard] = useState<number | string | null>(null);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const player = useSelector(
+    (state: RootState) => state.characters.playerCards
+  );
+
+  const enemy = useSelector((state: RootState) => state.characters.enemyCards);
+  const winner = useSelector((state: RootState) => state.characters.winner);
+  const isLoading = useSelector(
+    (state: RootState) => state.characters.isLoading
+  );
+
+  const board = useSelector((state: RootState) => state.characters.board);
+  const serverBoard = useSelector(
+    (state: RootState) => state.characters.serverBoard
+  );
+  const playerScore = useSelector(
+    (state: RootState) => state.characters.playerScore
+  );
+  const enemyScore = useSelector(
+    (state: RootState) => state.characters.enemyScore
+  );
+  const isModalOpen = useSelector(
+    (state: RootState) => state.characters.isModalOpen
+  );
+
   const [background, setBackground] = useState<boolean>(true);
-  const [enemyScore, setEnemyScore] = useState<number>(0);
-  const [playerScore, setPlayerScore] = useState<number>(0);
-  const [modal, setModal] = useState<boolean>(false);
-  const [winner, setWinner] = useState<string>("");
-  const [isLoading, setLoading] = useState<boolean>(true);
+  const [chosenCardId, setChosenCardId] = useState<number | string | null>(
+    null
+  );
 
   console.log("render");
 
   useEffect(() => {
-    const getPlayerCards = async () => {
-      setLoading(true);
-      const response = await fetch(
-        "https://ttgapi.herokuapp.com/api/v1/marvel/create"
-      );
-      const characters: JSONResponse = await response.json();
-
-      const responseEnemy = await fetch(
-        "https://ttgapi.herokuapp.com/api/v1/marvel/game/start",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            characters: characters.data,
-          }),
-        }
-      );
-      const enemy: JSONResponse = await responseEnemy.json();
-      setEnemy(enemy.data);
-      setPlayer(characters.data);
-    };
-    getPlayerCards();
-    setLoading(false);
+    dispatch(getPlayerCardsThunk());
+    dispatch(getEnemyCardsThunk(player));
   }, []);
 
   const handleHandsClick = (id: string | number) => {
-    setChoiseCard(id);
+    setChosenCardId(id);
   };
 
   const handleCellClick = async (index: number) => {
@@ -69,11 +71,11 @@ const Game: React.FC = () => {
         p2: enemy,
       },
       currentPlayer: "p1",
-      board: serverboard,
+      board: serverBoard,
       move: {},
     };
 
-    const playerCard = player.find((item) => item.id === choiseCard);
+    const playerCard = player.find((item) => item.id === chosenCardId);
 
     if (playerCard) {
       params.move = {
@@ -85,107 +87,19 @@ const Game: React.FC = () => {
       return;
     }
 
-    setBoard((prevState) => {
-      if (playerCard) {
-        const copyState: (Character | number)[] = [...prevState];
-        copyState[index] = playerCard;
-        return copyState;
-      }
-      return prevState;
-    });
-
-    setPlayer((prevState) =>
-      prevState.filter((item) => item.id !== choiseCard)
-    );
-    setChoiseCard(null);
-
-    const responseGame = await fetch(
-      "https://ttgapi.herokuapp.com/api/v1/marvel/game",
-      { method: "POST", body: JSON.stringify(params) }
-    );
-    const nextStep = await responseGame.json();
-    setServerBoard(nextStep.board);
-    setBoard(
-      nextStep.oldBoard.map((item: any) =>
-        typeof item === "object" ? { ...item.poke, holder: item.holder } : item
-      )
-    );
-
-    if (nextStep.move !== null) {
-      setEnemy((prevState) =>
-        prevState.filter((item) => item.id !== nextStep.move.poke.id)
-      );
-
-      setTimeout(() => {
-        setBoard(
-          nextStep.board.map((item: any) =>
-            typeof item === "object"
-              ? { ...item.poke, holder: item.holder }
-              : item
-          )
-        );
-        setPlayerScore(
-          nextStep.board.reduce((acc: number, item: any) => {
-            if (item.holder === "p1") {
-              acc++;
-            }
-            return acc;
-          }, 0)
-        );
-        setEnemyScore(
-          nextStep.board.reduce((acc: number, item: any) => {
-            if (item.holder === "p2") {
-              acc++;
-            }
-            return acc;
-          }, 0)
-        );
-      }, 500);
-    } else {
-      console.log(nextStep);
-      console.log("player pokes", nextStep.hands.p1.pokes.length);
-      console.log("enemy pokes", nextStep.hands.p2.pokes.length);
-      const nbP1 = nextStep.board.reduce((acc: number, item: any) => {
-        if (item.holder === "p1") {
-          acc++;
-        }
-        return acc;
-      }, 0);
-      const nbP2 = nextStep.board.reduce((acc: number, item: any) => {
-        if (item.holder === "p2") {
-          acc++;
-        }
-        return acc;
-      }, 0);
-      setPlayerScore(nbP1 + nextStep.hands.p1.pokes.length);
-      setEnemyScore(nbP2 + nextStep.hands.p2.pokes.length);
-      endgame();
-    }
+    dispatch(setBoard({ index, playerCard }));
+    dispatch(setPlayerCards(chosenCardId));
+    setChosenCardId(null);
+    dispatch(launchGameThunk(params));
   };
 
-  function endgame() {
-    console.log("player", playerScore + player.length);
-    console.log("enemy", enemyScore + enemy.length);
-
-    if (playerScore + player.length > enemyScore + enemy.length) {
-      setModal(true);
-      setWinner("blue");
-    } else if (playerScore + player.length < enemyScore + enemy.length) {
-      setModal(true);
-      setWinner("red");
-    } else if (playerScore + player.length == enemyScore + enemy.length) {
-      setModal(true);
-      setWinner("draw");
-    }
+  {
+    isLoading && <Preloader />;
   }
-  if (isLoading) {
-    return <Preloader />;
-  }
-
   return (
     <div className={cn(s.root, { [s.board2]: background })}>
-      {modal && <Modal winner={winner} />}
       <Hand side="left" characters={enemy} disabled score={enemyScore} />
+      {isModalOpen && <Modal winner={winner} />}
       <Board board={board} onClick={handleCellClick} />
       <Hand
         onClick={handleHandsClick}
