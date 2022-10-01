@@ -36,6 +36,7 @@ export const getPlayerCardsThunk = createAsyncThunk(
     try {
       const response = await fetch(
         "https://ttgapi.herokuapp.com/api/v1/marvel/create"
+        // "http://0.0.0.0:3004/api/v1/marvel/create"
       );
       const playerCards: JSONResponse = await response.json();
       return playerCards.data;
@@ -50,6 +51,8 @@ export const getEnemyCardsThunk: any = createAsyncThunk(
     try {
       const response = await fetch(
         "https://ttgapi.herokuapp.com/api/v1/marvel/game/start",
+        // "http://0.0.0.0:3004/api/v1/marvel/game/start",
+
         {
           method: "POST",
           body: JSON.stringify({
@@ -71,7 +74,7 @@ export const launchGameThunk = createAsyncThunk(
     try {
       const response = await fetch(
         "https://ttgapi.herokuapp.com/api/v1/marvel/game",
-
+        // "http://0.0.0.0:3004/api/v1/marvel/game",
         {
           method: "POST",
           body: JSON.stringify(params),
@@ -112,7 +115,6 @@ const characterSlice = createSlice({
     ) => {
       state.playerCards = action.payload;
       state.isLoading = false;
-      console.log(action);
     },
     [getPlayerCardsThunk.rejected.type]: (
       state: InitialStateType,
@@ -132,7 +134,6 @@ const characterSlice = createSlice({
     ) => {
       state.enemyCards = action.payload;
       state.isLoading = false;
-      console.log(action);
     },
     [getEnemyCardsThunk.rejected.type]: (
       state: InitialStateType,

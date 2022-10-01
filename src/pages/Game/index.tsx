@@ -53,8 +53,6 @@ const Game: React.FC = () => {
     null
   );
 
-  console.log("render");
-
   useEffect(() => {
     dispatch(getPlayerCardsThunk());
     dispatch(getEnemyCardsThunk(player));
@@ -93,15 +91,13 @@ const Game: React.FC = () => {
     dispatch(launchGameThunk(params));
   };
 
-  {
-    isLoading && <Preloader />;
-  }
   return (
     <div className={cn(s.root, { [s.board2]: background })}>
       <Hand side="left" characters={enemy} disabled score={enemyScore} />
       {isModalOpen && <Modal winner={winner} />}
       <Board board={board} onClick={handleCellClick} />
       <Hand
+        disabled={isLoading}
         onClick={handleHandsClick}
         side="right"
         characters={player}
