@@ -1,5 +1,5 @@
   <div align='center'>
-
+Deployé sur Netlify [Triple Triad](https://triple-triad.netlify.app/).
 #About game
 
 <p>
