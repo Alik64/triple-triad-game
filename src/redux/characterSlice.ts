@@ -1,5 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Character } from "../interfaces";
+import { RootState } from "./store";
 
 export interface InitialStateType {
   board: (Character | number)[];
@@ -217,5 +218,21 @@ const characterSlice = createSlice({
     },
   },
 });
+
 export const { toggleModal, setBoard, setPlayerCards } = characterSlice.actions;
+export const playerCardSelector = (state: RootState) =>
+  state.characters.playerCards;
+export const enemyCardsSelector = (state: RootState) =>
+  state.characters.enemyCards;
+export const winnerSelector = (state: RootState) => state.characters.winner;
+export const isLoadingSelector = (state: RootState) =>
+  state.characters.isLoading;
+export const boardSelector = (state: RootState) => state.characters.board;
+export const serverBoardSelector = (state: RootState) =>
+  state.characters.serverBoard;
+export const playerScoreSelector = (state: RootState) =>
+  state.characters.playerScore;
+export const enemyScoreSelector = (state: RootState) =>
+  state.characters.enemyScore;
+
 export default characterSlice.reducer;

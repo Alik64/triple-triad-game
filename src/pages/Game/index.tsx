@@ -10,12 +10,20 @@ import { Character } from "../../interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
 import {
+  boardSelector,
+  enemyCardsSelector,
+  enemyScoreSelector,
   getEnemyCardsThunk,
   getPlayerCardsThunk,
+  isLoadingSelector,
   launchGameThunk,
+  playerCardSelector,
+  playerScoreSelector,
+  serverBoardSelector,
   setBoard,
   setPlayerCards,
   toggleModal,
+  winnerSelector,
 } from "../../redux/characterSlice";
 
 import cn from "classnames";
@@ -24,26 +32,15 @@ import s from "./Game.module.css";
 const Game: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const player = useSelector(
-    (state: RootState) => state.characters.playerCards
-  );
+  const player = useSelector(playerCardSelector);
+  const enemy = useSelector(enemyCardsSelector);
+  const winner = useSelector(winnerSelector);
+  const isLoading = useSelector(isLoadingSelector);
+  const board = useSelector(boardSelector);
+  const serverBoard = useSelector(serverBoardSelector);
+  const playerScore = useSelector(playerScoreSelector);
+  const enemyScore = useSelector(enemyScoreSelector);
 
-  const enemy = useSelector((state: RootState) => state.characters.enemyCards);
-  const winner = useSelector((state: RootState) => state.characters.winner);
-  const isLoading = useSelector(
-    (state: RootState) => state.characters.isLoading
-  );
-
-  const board = useSelector((state: RootState) => state.characters.board);
-  const serverBoard = useSelector(
-    (state: RootState) => state.characters.serverBoard
-  );
-  const playerScore = useSelector(
-    (state: RootState) => state.characters.playerScore
-  );
-  const enemyScore = useSelector(
-    (state: RootState) => state.characters.enemyScore
-  );
   const isModalOpen = useSelector(
     (state: RootState) => state.characters.isModalOpen
   );
