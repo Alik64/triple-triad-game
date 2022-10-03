@@ -2,28 +2,22 @@ import React, { useEffect, useState } from "react";
 
 import Hand from "../../components/Hand";
 import Board from "../../components/Board";
-import Modal from "../../components/Modal";
-import Preloader from "../../components/Preloader";
-
-import { Character } from "../../interfaces";
 
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../redux/store";
+import { AppDispatch } from "../../redux/store";
 import {
-  boardSelector,
-  enemyCardsSelector,
-  enemyScoreSelector,
-  getEnemyCardsThunk,
-  getPlayerCardsThunk,
-  isLoadingSelector,
-  launchGameThunk,
-  playerCardSelector,
-  playerScoreSelector,
-  serverBoardSelector,
   setBoard,
   setPlayerCards,
-  toggleModal,
-  winnerSelector,
+  boardSelector,
+  playerCardSelector,
+  playerScoreSelector,
+  enemyCardsSelector,
+  enemyScoreSelector,
+  serverBoardSelector,
+  isLoadingSelector,
+  getPlayerCardsThunk,
+  getEnemyCardsThunk,
+  launchGameThunk,
 } from "../../redux/characterSlice";
 
 import cn from "classnames";
@@ -34,16 +28,14 @@ const Game: React.FC = () => {
 
   const player = useSelector(playerCardSelector);
   const enemy = useSelector(enemyCardsSelector);
-  const winner = useSelector(winnerSelector);
+
   const isLoading = useSelector(isLoadingSelector);
+
   const board = useSelector(boardSelector);
   const serverBoard = useSelector(serverBoardSelector);
+
   const playerScore = useSelector(playerScoreSelector);
   const enemyScore = useSelector(enemyScoreSelector);
-
-  const isModalOpen = useSelector(
-    (state: RootState) => state.characters.isModalOpen
-  );
 
   const [background, setBackground] = useState<boolean>(true);
   const [chosenCardId, setChosenCardId] = useState<number | string | null>(
@@ -97,8 +89,9 @@ const Game: React.FC = () => {
         score={enemyScore}
         shining
       />
-      {isModalOpen && <Modal winner={winner} />}
+
       <Board board={board} onClick={handleCellClick} />
+
       <Hand
         shining={isLoading}
         disabled={isLoading}
@@ -107,6 +100,7 @@ const Game: React.FC = () => {
         characters={player}
         score={playerScore}
       />
+
       <section className={s.buttonContainer}>
         <button
           onClick={() => setBackground((prev: boolean) => !prev)}

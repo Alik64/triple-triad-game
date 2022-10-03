@@ -161,11 +161,13 @@ const characterSlice = createSlice({
         state.enemyCards = state.enemyCards.filter(
           (item) => item.id !== action.payload.move.poke.id
         );
+
         state.board = action.payload.board.map((item: any) =>
           typeof item === "object"
             ? { ...item.poke, holder: item.holder }
             : item
         );
+
         state.playerScore = action.payload.board.reduce(
           (acc: number, item: any) => {
             if (item.holder === "p1") {
@@ -234,5 +236,7 @@ export const playerScoreSelector = (state: RootState) =>
   state.characters.playerScore;
 export const enemyScoreSelector = (state: RootState) =>
   state.characters.enemyScore;
+export const isModalOpenSelector = (state: RootState) =>
+  state.characters.isModalOpen;
 
 export default characterSlice.reducer;
