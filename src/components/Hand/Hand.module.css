@@ -5,6 +5,23 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+
+}
+
+.shining {
+    animation: glowBlue 1s infinite alternate;
+}
+
+@keyframes glowBlue {
+    from {
+        filter: drop-shadow(0 0 0px blue);
+
+    }
+
+    to {
+        filter: drop-shadow(0 0 20px rgb(0, 179, 255));
+
+    }
 }
 
 .root img {

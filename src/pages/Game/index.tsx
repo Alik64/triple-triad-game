@@ -93,10 +93,17 @@ const Game: React.FC = () => {
 
   return (
     <div className={cn(s.root, { [s.board2]: background })}>
-      <Hand side="left" characters={enemy} disabled score={enemyScore} />
+      <Hand
+        side="left"
+        characters={enemy}
+        disabled
+        score={enemyScore}
+        shining
+      />
       {isModalOpen && <Modal winner={winner} />}
       <Board board={board} onClick={handleCellClick} />
       <Hand
+        shining={isLoading}
         disabled={isLoading}
         onClick={handleHandsClick}
         side="right"
