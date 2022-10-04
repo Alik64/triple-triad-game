@@ -1,5 +1,8 @@
 .root {
-    background: url(../../assets/board-mat.jpg) contain center no-repeat;
+    background: url(../../assets/board-mat.jpg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;

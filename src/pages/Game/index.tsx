@@ -81,7 +81,7 @@ const Game: React.FC = () => {
   };
 
   return (
-    <div className={cn(s.root, { [s.board2]: background })}>
+    <div className={cn(s.root, { [s.board2]: !background })}>
       <Hand
         side="left"
         characters={enemy}
