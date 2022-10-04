@@ -1,11 +1,12 @@
 .root {
-    position: relative;
-    width: 20%;
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
     justify-content: center;
 
+}
+
+.hand_content {
+    width: 220px;
+    max-width: 220px;
 }
 
 .shining {
@@ -54,9 +55,9 @@
 
 
 .score {
+
     position: absolute;
-    bottom: -25%;
-    left: 15%;
+    bottom: -20%;
     display: flex;
     justify-content: center;
     align-items: center;
