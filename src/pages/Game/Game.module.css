@@ -1,18 +1,16 @@
 .root {
-    position: relative;
-    margin: 2% auto 0;
-    padding: 50px 0;
-    background: url(../../assets/board-mat.jpg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 1164px;
+    background: url(../../assets/board-mat.jpg) contain center no-repeat;
+
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
     height: 679px;
-    display: flex;
-    justify-content: space-around;
     filter: drop-shadow(0px 0px 15px #fff);
     border-radius: 20px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
 }
 
 .root.board2 {
@@ -96,4 +94,24 @@
     transform: translateX(-1px);
     background: rgb(252, 0, 0);
     transition: all 0.25s ease;
+}
+
+@media screen and (max-width: 1100px) {
+    .root {
+        max-width: 900px;
+    }
+
+    .buttonContainer {
+        bottom: -5%;
+    }
+}
+
+@media screen and (max-width: 860px) {
+    .root {
+        max-width: 660px;
+    }
+
+    .buttonContainer {
+        bottom: -5%;
+    }
 }
