@@ -115,6 +115,10 @@ const Game: React.FC = () => {
           <span className={s.resetBtn_span}></span>Reset game
         </button>
       </section>
+      <h5 className={s.author}>
+        Made with ⚛️ by{" "}
+        <a href="https://www.linkedin.com/in/albert-64/">Albert</a>
+      </h5>
     </div>
   );
 };

@@ -98,6 +98,19 @@
     transition: all 0.25s ease;
 }
 
+.author {
+    position: absolute;
+    left: 50%;
+    top: 124%;
+    transform: translate(-50%, -50%);
+}
+
+.author a {
+    background-image: linear-gradient(to right, blue, red 80%);
+    color: transparent;
+    background-clip: text;
+}
+
 @media screen and (max-width: 1100px) {
     .root {
         max-width: 900px;
@@ -120,6 +133,7 @@
 
 @media screen and (max-width: 667px) {
     .root {
+        margin-top: 5px;
         max-width: 560px;
         height: 300px;
         align-items: start;
@@ -127,5 +141,9 @@
 
     .buttonContainer {
         bottom: -60%;
+    }
+
+    .author {
+        top: 175%;
     }
 }
