@@ -112,3 +112,26 @@
         bottom: 10%;
     }
 }
+
+@media screen and (max-width: 667px) {
+    .hand_content {
+        max-width: 120px;
+    }
+
+    .score {
+        bottom: -25%;
+        font-size: 16px;
+    }
+
+    .right.active {
+        border-width: 2px;
+        margin-left: -20px;
+        margin-bottom: 20px;
+    }
+
+    .left.active {
+        border-width: 2px;
+    }
+
+
+}

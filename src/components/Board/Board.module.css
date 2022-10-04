@@ -17,7 +17,7 @@
     width: 100%;
     height: 100%;
     cursor: pointer;
-    border: 1px solid red;
+
 }
 
 .cell:hover {
@@ -42,5 +42,13 @@
         max-width: 330px;
         max-height: 330px;
 
+    }
+}
+
+@media screen and (max-width: 667px) {
+    .board {
+        max-width: 255px;
+        max-height: 255px;
+        margin-top: 23px;
     }
 }

@@ -23,7 +23,10 @@ const Modal: React.FC<ModalProps> = ({ winner }) => {
           <img alt="star" className={cn(s.star, s[winner])} />
           {winner !== "draw" ? <h2>Winner</h2> : <h2>...</h2>}
           <h3>{winner}</h3>
-          <button onClick={() => window.location.reload()} className="btn">
+          <button
+            onClick={() => window.location.reload()}
+            className={cn("btn", s.modal_btn)}
+          >
             <span className={s.resetBtn_span}></span>Try again
           </button>
         </div>

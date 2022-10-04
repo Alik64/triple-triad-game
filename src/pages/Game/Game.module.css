@@ -1,6 +1,5 @@
 .root {
     background: url(../../assets/board-mat.jpg) contain center no-repeat;
-
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
@@ -113,5 +112,17 @@
 
     .buttonContainer {
         bottom: -5%;
+    }
+}
+
+@media screen and (max-width: 667px) {
+    .root {
+        max-width: 560px;
+        height: 300px;
+        align-items: start;
+    }
+
+    .buttonContainer {
+        bottom: -60%;
     }
 }
