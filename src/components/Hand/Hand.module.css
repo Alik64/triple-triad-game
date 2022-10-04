@@ -55,7 +55,6 @@
 
 
 .score {
-
     position: absolute;
     bottom: -20%;
     display: flex;
@@ -92,4 +91,24 @@
 
 .score span {
     margin-right: 10px;
+}
+
+@media screen and (max-width: 1100px) {
+    .hand_content {
+        max-width: 185px;
+    }
+
+    .score {
+        bottom: -5%;
+    }
+}
+
+@media screen and (max-width: 860px) {
+    .hand_content {
+        max-width: 145px;
+    }
+
+    .score {
+        bottom: 10%;
+    }
 }

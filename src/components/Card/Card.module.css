@@ -52,3 +52,43 @@
 .p2 {
     border-color: red;
 }
+
+@media screen and (max-width: 1100px) {
+    .root {
+        border: 3px solid inherit;
+
+        max-height: 175px;
+    }
+
+}
+
+@media screen and (max-width: 860px) {
+    .root {
+        border: 2px solid inherit;
+        max-height: 135px;
+    }
+
+    .values {
+        font-size: 15px;
+    }
+
+    .values div:nth-child(1) {
+        left: 10%;
+        top: -15%;
+    }
+
+    .values div:nth-child(2) {
+        left: 30%;
+        top: 10%;
+    }
+
+    .values div:nth-child(3) {
+        bottom: 30%;
+        left: 10%;
+    }
+
+    .values div:nth-child(4) {
+        top: 10%;
+        left: -15%;
+    }
+}
