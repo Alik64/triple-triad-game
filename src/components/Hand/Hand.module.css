@@ -133,5 +133,11 @@
         border-width: 2px;
     }
 
+    .score div {
+        width: 35px;
+        height: 35px;
+
+    }
+
 
 }

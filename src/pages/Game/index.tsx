@@ -45,7 +45,7 @@ const Game: React.FC = () => {
   useEffect(() => {
     dispatch(getPlayerCardsThunk());
     dispatch(getEnemyCardsThunk(player));
-  }, []);
+  }, [dispatch]);
 
   const handleHandsClick = (id: string | number) => {
     setChosenCardId(id);

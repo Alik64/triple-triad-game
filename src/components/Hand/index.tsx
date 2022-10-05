@@ -5,10 +5,7 @@ import cn from "classnames";
 import s from "./Hand.module.css";
 import Card from "../Card";
 import { useSelector } from "react-redux";
-import {
-  isLoadingSelector,
-  enemyCardsSelector,
-} from "../../redux/characterSlice";
+import { enemyCardsSelector } from "../../redux/characterSlice";
 import Preloader from "../Preloader";
 
 interface HandsProps {
