@@ -1,0 +1,78 @@
+.root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.modal {
+    background-image: url('../../../assets/homepage.jpg');
+    width: 350px;
+    height: 350px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    z-index: 2;
+
+}
+
+.modal .flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.modal p {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.modal h3 {
+
+    font-size: 24px;
+}
+
+
+
+
+
+.btn_close {
+    all: unset;
+    cursor: pointer;
+    background-image: url('../../../assets/homepage.jpg');
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 16px;
+    color: rgba(4, 238, 246, 0.3);
+}
+
+.btn_close:hover {
+    border: 1px solid rgba(0, 214, 252, 1);
+    color: rgba(0, 214, 252, 1);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    z-index: 1;
+}

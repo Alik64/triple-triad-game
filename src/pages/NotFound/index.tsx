@@ -6,6 +6,7 @@ import s from "./NotFound.module.css";
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();
+
   return (
     <main className={s.root}>
       <section className={s.description}>

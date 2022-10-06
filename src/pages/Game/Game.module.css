@@ -147,3 +147,20 @@
         top: 175%;
     }
 }
+
+@media screen and (max-width: 667px) {
+    .root {
+        margin-top: 5px;
+        max-width: 560px;
+        height: 300px;
+        align-items: start;
+    }
+
+    .buttonContainer {
+        bottom: -60%;
+    }
+
+    .author {
+        top: 175%;
+    }
+}

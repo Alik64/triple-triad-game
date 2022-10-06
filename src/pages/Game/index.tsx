@@ -23,6 +23,7 @@ import {
 import cn from "classnames";
 import s from "./Game.module.css";
 import useMediaQuery from "../../utils/hooks/useMediaQuery";
+import ModalMobile from "../../components/UI/ModalMobile";
 
 const Game: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -42,9 +43,7 @@ const Game: React.FC = () => {
   const [chosenCardId, setChosenCardId] = useState<number | string | null>(
     null
   );
-  const matches = useMediaQuery("(min-width: 556px)");
-
-  console.log("matches", matches);
+  const matches = useMediaQuery("(min-width: 668px)");
 
   useEffect(() => {
     dispatch(getPlayerCardsThunk());
@@ -84,7 +83,10 @@ const Game: React.FC = () => {
 
     dispatch(launchGameThunk(params));
   };
-  console.log("render");
+
+  if (!matches && window.innerHeight > 500) {
+    return <ModalMobile />;
+  }
   return (
     <div className={cn(s.root, { [s.board2]: !background })}>
       <Hand

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import Modal from "./components/Modal";
+import Modal from "./components/UI/Modal";
 
 import Game from "./pages/Game";
 import Home from "./pages/Home";
