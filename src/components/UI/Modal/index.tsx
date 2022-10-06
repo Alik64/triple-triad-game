@@ -15,7 +15,7 @@ const Modal: React.FC<ModalProps> = ({ winner }) => {
       <div className={s.cover}>
         <div className={s.content}>
           <button
-            className={s.close_btn}
+            className={s.btn_close}
             onClick={() => dispatch(toggleModal())}
           >
             ❌

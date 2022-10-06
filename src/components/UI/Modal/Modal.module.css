@@ -26,6 +26,27 @@
     position: relative;
 }
 
+.btn_close {
+    all: unset;
+    cursor: pointer;
+    background-image: url('../../../assets/homepage.jpg');
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 16px;
+    color: rgba(4, 238, 246, 0.3);
+}
+
+.btn_close:hover {
+    border: 1px solid rgba(0, 214, 252, 1);
+    color: rgba(0, 214, 252, 1);
+}
 
 .star {
     position: absolute;
