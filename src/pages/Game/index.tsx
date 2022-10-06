@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useTransition } from "react";
 
 import Hand from "../../components/Hand";
 import Board from "../../components/Board";
@@ -22,6 +22,7 @@ import {
 
 import cn from "classnames";
 import s from "./Game.module.css";
+import useMediaQuery from "../../utils/hooks/useMediaQuery";
 
 const Game: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -41,6 +42,9 @@ const Game: React.FC = () => {
   const [chosenCardId, setChosenCardId] = useState<number | string | null>(
     null
   );
+  const matches = useMediaQuery("(min-width: 556px)");
+
+  console.log("matches", matches);
 
   useEffect(() => {
     dispatch(getPlayerCardsThunk());
@@ -74,12 +78,13 @@ const Game: React.FC = () => {
       return;
     }
 
-    dispatch(setBoard({ index, playerCard }));
     dispatch(setPlayerCards(chosenCardId));
+    dispatch(setBoard({ index, playerCard }));
     setChosenCardId(null);
+
     dispatch(launchGameThunk(params));
   };
-
+  console.log("render");
   return (
     <div className={cn(s.root, { [s.board2]: !background })}>
       <Hand

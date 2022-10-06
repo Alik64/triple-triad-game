@@ -154,9 +154,11 @@ const characterSlice = createSlice({
     ) => {
       state.isLoading = false;
       state.serverBoard = action.payload.board;
+
       state.board = action.payload.oldBoard.map((item: any) =>
         typeof item === "object" ? { ...item.poke, holder: item.holder } : item
       );
+
       if (action.payload.move !== null) {
         state.enemyCards = state.enemyCards.filter(
           (item) => item.id !== action.payload.move.poke.id
