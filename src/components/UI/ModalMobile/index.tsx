@@ -12,7 +12,7 @@ const ModalMobile: React.FC = () => {
             <br />
             or
             <br />
-            adjust your screen browser size to 668px min.
+            adjust your screen browser size to 667px min.
           </p>
         </div>
       </section>

@@ -45,7 +45,7 @@
     }
 }
 
-@media screen and (max-width: 667px) {
+@media screen and (max-width: 666px) {
     .board {
         max-width: 255px;
         max-height: 255px;

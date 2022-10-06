@@ -4,9 +4,16 @@ import logoGame from "../../assets/logoGame.png";
 import combat from "./images/combat.png";
 import cn from "classnames";
 import s from "./Home.module.css";
+import useMediaQuery from "../../utils/hooks/useMediaQuery";
+import ModalMobile from "../../components/UI/ModalMobile";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const matches = useMediaQuery("(min-width: 667px)");
+
+  if (!matches && window.innerHeight > 500) {
+    return <ModalMobile />;
+  }
   return (
     <div className={s.root}>
       <img src={combat} className={s.combat} alt="Cap America vs iron man" />
