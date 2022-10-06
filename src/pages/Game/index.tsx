@@ -43,7 +43,7 @@ const Game: React.FC = () => {
   const [chosenCardId, setChosenCardId] = useState<number | string | null>(
     null
   );
-  const matches = useMediaQuery("(min-width: 667px)");
+  const matches = useMediaQuery("(min-width: 668px)");
 
   useEffect(() => {
     dispatch(getPlayerCardsThunk());

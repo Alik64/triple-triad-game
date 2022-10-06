@@ -9,7 +9,7 @@ import ModalMobile from "../../components/UI/ModalMobile";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const matches = useMediaQuery("(min-width: 667px)");
+  const matches = useMediaQuery("(min-width: 668px)");
 
   if (!matches && window.innerHeight > 500) {
     return <ModalMobile />;
