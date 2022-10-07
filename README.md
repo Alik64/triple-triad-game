@@ -1,6 +1,6 @@
 <div align='center'>
 
-Deployé sur Netlify [Triple Triad](https://triple-triad.netlify.app/)
+Deployed on Netlify [Triple Triad](https://triple-triad.netlify.app/)
 
 # About game
 
