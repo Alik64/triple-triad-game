@@ -13,6 +13,7 @@ export interface InitialStateType {
   isLoading: boolean;
   isModalOpen: boolean;
   error: string;
+  game: any;
 }
 type JSONResponse = {
   data: Array<Character>;
@@ -30,6 +31,7 @@ const initialState: InitialStateType = {
   isLoading: false,
   isModalOpen: false,
   error: "",
+  game: {},
 };
 export const getPlayerCardsThunk = createAsyncThunk(
   "characters/getPlayerCards",
@@ -99,9 +101,15 @@ const characterSlice = createSlice({
     setBoard: (state: InitialStateType, action: any) => {
       state.board[action.payload.index] = action.payload.playerCard;
     },
+
     setPlayerCards: (state: InitialStateType, action: any) => {
       state.playerCards = state.playerCards.filter(
         (item) => item.id !== action.payload
+      );
+    },
+    setGameBoard: (state: InitialStateType) => {
+      state.board = state.game.board.map((item: any) =>
+        typeof item === "object" ? { ...item.poke, holder: item.holder } : item
       );
     },
   },
@@ -163,13 +171,7 @@ const characterSlice = createSlice({
         state.enemyCards = state.enemyCards.filter(
           (item) => item.id !== action.payload.move.poke.id
         );
-
-        state.board = action.payload.board.map((item: any) =>
-          typeof item === "object"
-            ? { ...item.poke, holder: item.holder }
-            : item
-        );
-
+        state.game = action.payload;
         state.playerScore = action.payload.board.reduce(
           (acc: number, item: any) => {
             if (item.holder === "p1") {
@@ -212,6 +214,11 @@ const characterSlice = createSlice({
         } else if (state.playerScore === state.enemyScore) {
           state.winner = "draw";
         }
+        state.board = action.payload.board.map((item: any) =>
+          typeof item === "object"
+            ? { ...item.poke, holder: item.holder }
+            : item
+        );
         state.isModalOpen = true;
       }
     },
@@ -223,7 +230,8 @@ const characterSlice = createSlice({
   },
 });
 
-export const { toggleModal, setBoard, setPlayerCards } = characterSlice.actions;
+export const { toggleModal, setBoard, setPlayerCards, setGameBoard } =
+  characterSlice.actions;
 export const playerCardSelector = (state: RootState) =>
   state.characters.playerCards;
 export const enemyCardsSelector = (state: RootState) =>
@@ -240,5 +248,6 @@ export const enemyScoreSelector = (state: RootState) =>
   state.characters.enemyScore;
 export const isModalOpenSelector = (state: RootState) =>
   state.characters.isModalOpen;
+export const gameSelector = (state: RootState) => state.characters.game;
 
 export default characterSlice.reducer;

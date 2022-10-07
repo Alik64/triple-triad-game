@@ -18,6 +18,8 @@ import {
   getPlayerCardsThunk,
   getEnemyCardsThunk,
   launchGameThunk,
+  gameSelector,
+  setGameBoard,
 } from "../../redux/characterSlice";
 
 import cn from "classnames";
@@ -81,7 +83,17 @@ const Game: React.FC = () => {
     dispatch(setBoard({ index, playerCard }));
     setChosenCardId(null);
 
-    dispatch(launchGameThunk(params));
+    const launchGamePromise = new Promise((res, rej) => {
+      res(dispatch(launchGameThunk(params)));
+    });
+
+    launchGamePromise.then(() => {
+      if (player.length > 1) {
+        setTimeout(() => {
+          dispatch(setGameBoard());
+        }, 500);
+      }
+    });
   };
 
   if (!matches && window.innerHeight > 500) {
