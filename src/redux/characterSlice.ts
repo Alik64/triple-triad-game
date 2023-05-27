@@ -38,7 +38,7 @@ export const getPlayerCardsThunk = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        "https://ttgapi.herokuapp.com/api/v1/marvel/create"
+        "https://ttg-api.onrender.com/api/v1/marvel/create"
         // "http://0.0.0.0:3004/api/v1/marvel/create"
       );
       const playerCards: JSONResponse = await response.json();
@@ -53,7 +53,7 @@ export const getEnemyCardsThunk: any = createAsyncThunk(
   async (player, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        "https://ttgapi.herokuapp.com/api/v1/marvel/game/start",
+        "https://ttg-api.onrender.com/api/v1/marvel/game/start",
         // "http://0.0.0.0:3004/api/v1/marvel/game/start",
 
         {
@@ -76,7 +76,7 @@ export const launchGameThunk = createAsyncThunk(
   async (params: {}, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        "https://ttgapi.herokuapp.com/api/v1/marvel/game",
+        "https://ttg-api.onrender.com/api/v1/marvel/game",
         // "http://0.0.0.0:3004/api/v1/marvel/game",
         {
           method: "POST",
