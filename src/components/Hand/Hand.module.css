@@ -56,7 +56,7 @@
 
 .score {
     position: absolute;
-    bottom: -20%;
+    bottom: -100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -97,19 +97,11 @@
     .hand_content {
         max-width: 185px;
     }
-
-    .score {
-        bottom: -5%;
-    }
 }
 
 @media screen and (max-width: 860px) {
     .hand_content {
         max-width: 145px;
-    }
-
-    .score {
-        bottom: 10%;
     }
 }
 
@@ -119,7 +111,7 @@
     }
 
     .score {
-        bottom: -20%;
+        bottom: -60px;
         font-size: 16px;
     }
 

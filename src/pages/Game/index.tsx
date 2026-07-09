@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useTransition } from "react";
+import React, { useEffect, useState } from "react";
 
 import Hand from "../../components/Hand";
 import Board from "../../components/Board";
@@ -18,7 +18,6 @@ import {
   getPlayerCardsThunk,
   getEnemyCardsThunk,
   launchGameThunk,
-  gameSelector,
   setGameBoard,
 } from "../../redux/characterSlice";
 
@@ -100,25 +99,27 @@ const Game: React.FC = () => {
     return <ModalMobile />;
   }
   return (
-    <div className={cn(s.root, { [s.board2]: !background })}>
-      <Hand
-        side="left"
-        characters={enemy}
-        disabled
-        score={enemyScore}
-        shining
-      />
+    <div className={s.page}>
+      <div className={cn(s.root, { [s.board2]: !background })}>
+        <Hand
+          side="left"
+          characters={enemy}
+          disabled
+          score={enemyScore}
+          shining
+        />
 
-      <Board board={board} onClick={handleCellClick} />
+        <Board board={board} onClick={handleCellClick} />
 
-      <Hand
-        shining={isLoading}
-        disabled={isLoading}
-        onClick={handleHandsClick}
-        side="right"
-        characters={player}
-        score={playerScore}
-      />
+        <Hand
+          shining={isLoading}
+          disabled={isLoading}
+          onClick={handleHandsClick}
+          side="right"
+          characters={player}
+          score={playerScore}
+        />
+      </div>
 
       <section className={s.buttonContainer}>
         <button
