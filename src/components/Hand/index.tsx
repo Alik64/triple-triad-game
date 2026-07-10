@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Character } from "../../interfaces";
 import cn from "classnames";
 
@@ -11,7 +11,7 @@ interface HandProps {
   side: "left" | "right";
   characters: Character[];
   score: number;
-  onClick?: (id: string | number) => void;
+  onClick?: (id: string | number | null) => void;
   disabled?: boolean;
   glowing?: boolean;
   loading?: boolean;
@@ -28,15 +28,27 @@ const Hand: React.FC<HandProps> = ({
 }) => {
   const [activeId, setActiveId] = useState<string | number | null>(null);
 
+  // drop a stale selection whenever the hand changes (card played, new game)
+  useEffect(() => {
+    setActiveId(null);
+  }, [characters]);
+
   const handleClick = (id: string | number) => {
     if (disabled) return;
-    setActiveId(id);
-    onClick && onClick(id);
+    // clicking the selected card again deselects it
+    const next = id === activeId ? null : id;
+    setActiveId(next);
+    onClick && onClick(next);
   };
 
   return (
     <div className={s.root}>
-      <div className={cn(s.hand_content, { [s.shining]: glowing })}>
+      <div
+        className={cn(s.hand_content, s[side], {
+          [s.shining]: glowing,
+          [s.disabled]: disabled,
+        })}
+      >
         {loading ? (
           <Preloader />
         ) : (
@@ -55,8 +67,13 @@ const Hand: React.FC<HandProps> = ({
         )}
       </div>
       <div className={cn(s.score, s[side])}>
-        <span>Score:</span>
-        <div>{score}</div>
+        <span className={s.scoreLabel}>
+          {side === "right" ? "You" : "Enemy"}
+        </span>
+        {/* the key replays the pop animation on every score change */}
+        <span key={score} className={s.scoreValue}>
+          {score}
+        </span>
       </div>
     </div>
   );

@@ -24,14 +24,18 @@ const Card: React.FC<CardProps> = ({
   return (
     <div
       className={cn(s.root, className, s[holder as "p1" | "p2"])}
-      style={{
-        backgroundImage: `url(${image})`,
-      }}
       onClick={handleClick}
     >
+      <div
+        className={s.image}
+        style={{
+          backgroundImage: `url(${image})`,
+        }}
+      />
+      {/* side values, FF8-style cross: top / right / bottom / left */}
       <div className={s.values}>
         {values.map((item, index) => (
-          <div key={index}>{item}</div>
+          <span key={index}>{item}</span>
         ))}
       </div>
     </div>

@@ -22,7 +22,6 @@ const Game: React.FC = () => {
   const initGame = useGameStore((state) => state.initGame);
   const playTurn = useGameStore((state) => state.playTurn);
 
-  const [background, setBackground] = useState<boolean>(true);
   const [chosenCardId, setChosenCardId] = useState<number | string | null>(
     null
   );
@@ -38,28 +37,53 @@ const Game: React.FC = () => {
     setChosenCardId(null);
   };
 
+  const isBusy = isLoading || isInitializing;
+  const status = isInitializing
+    ? "Dealing the cards"
+    : isLoading
+    ? "Enemy is thinking"
+    : chosenCardId !== null
+    ? "Choose a cell on the board"
+    : "Pick a card from your hand";
+
   if (!matches && window.innerHeight > 500) {
     return <ModalMobile />;
   }
   return (
     <div className={s.page}>
-      <div className={cn(s.root, { [s.board2]: !background })}>
+      <div
+        className={cn(s.status, {
+          [s.statusEnemy]: isLoading,
+          [s.statusBusy]: isBusy,
+        })}
+        role="status"
+      >
+        {isBusy && <span className={s.spinner} aria-hidden="true" />}
+        <span className={s.statusText}>{status}</span>
+      </div>
+
+      <div className={s.arena}>
         <Hand
           side="left"
           characters={enemy}
           disabled
           score={enemyScore}
           loading={isInitializing}
+          glowing={isLoading}
         />
 
-        <Board board={board} onClick={handleCellClick} />
+        <Board
+          board={board}
+          onClick={handleCellClick}
+          highlight={chosenCardId !== null && !isLoading}
+        />
 
         <Hand
           side="right"
           characters={player}
           score={playerScore}
           loading={isInitializing}
-          glowing={!isLoading}
+          glowing={!isBusy}
           disabled={isLoading}
           onClick={setChosenCardId}
         />
@@ -68,19 +92,12 @@ const Game: React.FC = () => {
       {error && <p className={s.error}>{error}</p>}
 
       <section className={s.buttonContainer}>
-        <button
-          onClick={() => setBackground((prev: boolean) => !prev)}
-          className={cn("btn", s.bgBtn)}
-        >
-          <span className="btn_span"></span>Change background
-        </button>
         <button onClick={initGame} className={cn("btn", s.resetBtn)}>
-          <span className={s.resetBtn_span}></span>Reset game
+          Reset game
         </button>
       </section>
       <h5 className={s.author}>
-        Made with ⚛️ by{" "}
-        <a href="https://www.linkedin.com/in/albert-64/">Albert</a>
+        Made by <a href="https://www.linkedin.com/in/albert-64/">Albert</a>
       </h5>
     </div>
   );

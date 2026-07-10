@@ -4,17 +4,49 @@
   box-sizing: border-box;
 }
 
-
+:root {
+  --bg: #070a14;
+  --panel: rgba(15, 20, 38, 0.55);
+  --panel-solid: #10162a;
+  --border: rgba(148, 163, 184, 0.16);
+  --text: #e5ecff;
+  --muted: #94a0bd;
+  --blue: #3b82f6;
+  --blue-bright: #60a5fa;
+  --cyan: #22d3ee;
+  --red: #ef4444;
+  --red-bright: #f87171;
+  --font-display: "Orbitron", "Rajdhani", sans-serif;
+  --font-body: "Rajdhani", "Segoe UI", sans-serif;
+}
 
 body {
-  background-color: black;
-  color: #fff;
-  background-image: url('./assets/homepage.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(60% 50% at 12% 0%, rgba(37, 99, 235, 0.18), transparent 65%),
+    radial-gradient(55% 45% at 88% 100%, rgba(239, 68, 68, 0.15), transparent 65%),
+    radial-gradient(45% 40% at 50% 45%, rgba(34, 211, 238, 0.06), transparent 70%);
   background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
   display: grid;
   min-height: 100vh;
+}
+
+/* faint arena grid, fading out towards the edges */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(70% 60% at 50% 40%, #000, transparent 78%);
+  mask-image: radial-gradient(70% 60% at 50% 40%, #000, transparent 78%);
+  pointer-events: none;
 }
 
 a {
@@ -22,97 +54,73 @@ a {
   color: inherit;
 }
 
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 .btn {
   all: unset;
-  cursor: pointer;
-}
-
-.btn {
   position: relative;
-  text-align: center;
-  border: solid 1px rgba(4, 238, 246, 0.3);
-
-  color: rgba(4, 238, 246, 0.5);
-  font-family: "Roboto", sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 170px;
+  height: 52px;
+  padding: 0 28px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
-  font-weight: normal;
-  letter-spacing: 1.8px;
-  width: 200px;
-  height: 70px;
-  padding: 0;
-  transition: all 0.25s ease;
-  outline: none;
-}
-
-.btn:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 10%;
-  width: 60px;
-  height: 1px;
-  transform: translateY(-1px);
-  background: rgba(4, 238, 246, 1);
-  transition: all 0.25s ease;
-}
-
-.btn:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 10%;
-  width: 60px;
-  height: 1px;
-  transform: translateY(1px);
-  background: rgba(0, 214, 252, 1);
-  transition: all 0.25s ease;
+  text-align: center;
+  color: #9ee8ff;
+  background: rgba(34, 211, 238, 0.07);
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.2s ease, transform 0.15s ease;
 }
 
 .btn:hover {
-  box-shadow: 1px 1px 8px rgba(0, 214, 252, 0.3);
-  color: rgba(0, 214, 252, 1);
-  text-shadow: 0 0 8px rgba(0, 214, 252, 0.4);
+  color: #e0faff;
+  background: rgba(34, 211, 238, 0.16);
+  border-color: rgba(34, 211, 238, 0.8);
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
 }
 
-.btn:before :hover {
-  left: 0;
-  width: 20px;
+.btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
-.btn:after:hover {
-  right: 0;
-  width: 20px;
+.btn:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
 }
 
-.btn:hover .btn_span:before {
-  bottom: 0;
+.btnPrimary {
+  color: #06121f;
+  background: linear-gradient(135deg, #67e8f9, #3b82f6);
+  border: 1px solid rgba(103, 232, 249, 0.6);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35);
 }
 
-.btn:hover .btn_span:after {
-  top: 0;
+.btnPrimary:hover {
+  color: #06121f;
+  background: linear-gradient(135deg, #8df0fc, #60a5fa);
+  border-color: #a5f3fc;
+  box-shadow: 0 10px 32px rgba(59, 130, 246, 0.5);
 }
 
-
-.btn_span:before {
-  content: "";
-  position: absolute;
-  bottom: 30%;
-  right: 0;
-  width: 1px;
-  height: 20px;
-  transform: translateX(1px);
-  background: rgba(0, 214, 252, 1);
-  transition: all 0.25s ease;
-}
-
-.btn_span:after {
-  content: "";
-  position: absolute;
-  top: 30%;
-  left: 0;
-  width: 1px;
-  height: 20px;
-  transform: translateX(-1px);
-  background: rgba(0, 214, 252, 1);
-  transition: all 0.25s ease;
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,5 +1,49 @@
 .root {
-    height: 100%;
-    display: grid;
-    place-items: center;
+    width: 100%;
+}
+
+/* mirrors the sizing and stacking of a real hand of cards */
+.card {
+    height: 220px;
+    border-radius: 14px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    background: linear-gradient(110deg,
+            rgba(30, 41, 59, 0.65) 40%,
+            rgba(100, 116, 139, 0.5) 50%,
+            rgba(30, 41, 59, 0.65) 60%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s linear infinite;
+}
+
+.card+.card {
+    margin-top: -57%;
+}
+
+@keyframes shimmer {
+    from {
+        background-position: 120% 0;
+    }
+
+    to {
+        background-position: -80% 0;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .card {
+        max-height: 175px;
+    }
+}
+
+@media screen and (max-width: 860px) {
+    .card {
+        max-height: 135px;
+        border-radius: 10px;
+    }
+}
+
+@media screen and (max-width: 667px) {
+    .card {
+        max-height: 115px;
+    }
 }

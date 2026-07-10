@@ -1,20 +1,72 @@
+.root {
+    padding: 60px 20px;
+}
+
 .wrapper {
     margin: 0 auto;
-    max-width: 1000px;
-    margin-top: 100px;
+    max-width: 860px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    text-align: center;
     align-items: center;
+    text-align: left;
+    padding: 48px 56px;
+    border-radius: 24px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
     font-size: 18px;
-    line-height: 1.4;
+    line-height: 1.7;
+    color: var(--text);
+    animation: fadeUp 0.6s ease both;
+}
+
+.wrapper p {
+    color: #c3cce4;
 }
 
 .wrapper h1 {
-    margin-bottom: 50px;
+    margin-bottom: 40px;
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-align: center;
+    background-image: linear-gradient(to right, #60a5fa, #f87171 80%);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
 }
 
 .wrapper button {
-    margin-top: 50px;
+    margin-top: 40px;
+    align-self: center;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media screen and (max-width: 860px) {
+    .root {
+        padding: 30px 14px;
+    }
+
+    .wrapper {
+        padding: 32px 24px;
+        font-size: 16px;
+    }
+
+    .wrapper h1 {
+        font-size: 24px;
+    }
 }

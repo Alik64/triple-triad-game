@@ -70,8 +70,11 @@ const Rules = () => {
           If the grid is filled with cards, and both players possess an equal
           number of cards of their color, a Draw will occur.
         </p>
-        <button onClick={() => navigate("/game")} className="btn">
-          <span className="btn_span"></span>Let's play
+        <button
+          onClick={() => navigate("/game")}
+          className="btn btnPrimary"
+        >
+          Let's play
         </button>
       </div>
     </div>
