@@ -1,101 +1,131 @@
 .root {
-    border: 10px solid black;
-    background: rgb(135, 105, 184);
+    position: relative;
     width: 100%;
     height: 220px;
+    padding: 3px;
+    border-radius: 14px;
     cursor: pointer;
+    background: linear-gradient(165deg, rgba(148, 163, 184, 0.55), rgba(30, 41, 59, 0.95));
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+    transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 1.2), box-shadow 0.25s ease;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    border-radius: 11px;
     background-size: cover;
+    background-position: center top;
+    background-color: #10162a;
+    overflow: hidden;
+    position: relative;
+}
+
+/* soft gloss on top of the artwork */
+.image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), transparent 38%, rgba(0, 0, 0, 0.28) 100%);
+    pointer-events: none;
 }
 
 .values {
-    font-weight: bold;
-    color: rgb(158, 151, 205);
-    font-size: 25px;
-    position: relative;
-    top: 5%;
-    width: 50px;
-    height: 50px;
-    margin-left: 10px;
-    color: #FFFFFF;
-    text-shadow: 0 -1px 4px rgb(21, 21, 84), 0 -18px 40px rgb(0, 0, 255);
-}
-
-.values div {
     position: absolute;
-
+    top: 9px;
+    left: 9px;
+    width: 54px;
+    height: 54px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    place-items: center;
+    border-radius: 10px;
+    background: rgba(7, 10, 20, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(4px);
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+    line-height: 1;
+    pointer-events: none;
 }
 
-.values div:nth-child(1) {
-    left: 50%;
-    top: -15%;
+.values span:nth-child(1) {
+    grid-area: 1 / 2;
 }
 
-.values div:nth-child(2) {
-    left: 100%;
-    top: 25%;
+.values span:nth-child(2) {
+    grid-area: 2 / 3;
 }
 
-.values div:nth-child(3) {
-    bottom: -15%;
-    left: 50%;
+.values span:nth-child(3) {
+    grid-area: 3 / 2;
 }
 
-.values div:nth-child(4) {
-    top: 25%;
-    left: 0%;
+.values span:nth-child(4) {
+    grid-area: 2 / 1;
 }
 
 .p1 {
-    border-color: blue;
+    background: linear-gradient(165deg, #60a5fa, #1d4ed8 55%, #172554);
+    box-shadow: 0 0 18px rgba(59, 130, 246, 0.45), 0 10px 24px rgba(0, 0, 0, 0.5);
 }
 
 .p2 {
-    border-color: red;
+    background: linear-gradient(165deg, #f87171, #b91c1c 55%, #450a0a);
+    box-shadow: 0 0 18px rgba(239, 68, 68, 0.45), 0 10px 24px rgba(0, 0, 0, 0.5);
 }
 
 @media screen and (max-width: 1100px) {
     .root {
-        border-width: 3px;
         max-height: 175px;
+        border-radius: 12px;
     }
 
+    .image {
+        border-radius: 9px;
+    }
+
+    .values {
+        width: 44px;
+        height: 44px;
+        font-size: 12px;
+        border-radius: 8px;
+    }
 }
 
 @media screen and (max-width: 860px) {
     .root {
-        border-width: 2px;
-
         max-height: 135px;
+        padding: 2px;
+        border-radius: 10px;
+    }
+
+    .image {
+        border-radius: 8px;
     }
 
     .values {
-        font-size: 15px;
-    }
-
-    .values div:nth-child(1) {
-        left: 10%;
-        top: -15%;
-    }
-
-    .values div:nth-child(2) {
-        left: 30%;
-        top: 10%;
-    }
-
-    .values div:nth-child(3) {
-        bottom: 30%;
-        left: 10%;
-    }
-
-    .values div:nth-child(4) {
-        top: 10%;
-        left: -15%;
+        top: 5px;
+        left: 5px;
+        width: 34px;
+        height: 34px;
+        font-size: 10px;
+        border-radius: 7px;
     }
 }
 
 @media screen and (max-width: 667px) {
     .root {
-
         max-height: 115px;
+    }
+
+    .values {
+        width: 30px;
+        height: 30px;
+        font-size: 9px;
     }
 }

@@ -1,37 +1,114 @@
-.root {}
+.root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    padding: 24px;
+    text-align: center;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    animation: fadeUp 0.6s ease both;
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    background-image: linear-gradient(to right, #60a5fa, #f87171 80%);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+.subtitle {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.hint {
+    color: var(--muted);
+}
+
+.images {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    animation: fadeUp 0.6s 0.15s ease both;
+}
+
+.buttons {
+    display: flex;
+    gap: 24px;
+    animation: fadeUp 0.6s 0.3s ease both;
+}
 
 .hydra {
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    animation: glowRed 1s infinite alternate;
+    animation: glowRed 1.4s infinite alternate;
 }
 
 .capAmerica {
-    animation: glowBlue 1s infinite alternate;
+    animation: glowBlue 1.4s infinite alternate;
+}
 
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes glowRed {
     from {
-        filter: drop-shadow(0 0 20px red);
-
+        filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.7));
     }
 
     to {
-
-        filter: drop-shadow(0 0 0px red);
+        filter: drop-shadow(0 0 2px rgba(239, 68, 68, 0.2));
     }
 }
 
 @keyframes glowBlue {
     from {
-        filter: drop-shadow(0 0 20px blue);
-
+        filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.7));
     }
 
     to {
+        filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.2));
+    }
+}
 
-        filter: drop-shadow(0 0 0px blue);
+@media screen and (max-width: 667px) {
+    .title {
+        font-size: 24px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+
+    .hydra {
+        width: 120px;
+        height: 120px;
+    }
+
+    .capAmerica {
+        max-width: 140px;
     }
 }

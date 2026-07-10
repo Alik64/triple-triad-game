@@ -10,12 +10,11 @@ const NotFound: React.FC = () => {
   return (
     <main className={s.root}>
       <section className={s.description}>
-        <h1>404 PAGE NOT FOUND </h1>
-        <h3>HYDRA is currently attacking this page</h3>
-        <p>Check that you typed the address correctly</p>
+        <h1 className={s.title}>404 Page not found</h1>
+        <h3 className={s.subtitle}>HYDRA is currently attacking this page</h3>
+        <p className={s.hint}>Check that you typed the address correctly</p>
       </section>
       <section className={s.images}>
-        {" "}
         <img src={hydra} alt="hydra clan logo" className={s.hydra} />
         <img
           src={capAmerica}
@@ -24,11 +23,11 @@ const NotFound: React.FC = () => {
         />
       </section>
       <section className={s.buttons}>
-        <button className="btn" onClick={() => navigate("/game")}>
-          <span className="btn_span"></span>play game
+        <button className="btn btnPrimary" onClick={() => navigate("/game")}>
+          Play game
         </button>
         <button className="btn" onClick={() => navigate("/")}>
-          <span className="btn_span"></span>home page
+          Home page
         </button>
       </section>
     </main>

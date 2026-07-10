@@ -1,29 +1,41 @@
 .root {
     height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
     position: relative;
+    overflow: hidden;
 }
 
 .titleContainer {
     position: relative;
     bottom: 7%;
+    z-index: 1;
     display: flex;
     align-items: center;
-    font-size: 40px;
-    background-image: linear-gradient(to right, blue, red 80%);
+    animation: fadeUp 0.8s 0.1s ease both;
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    background-image: linear-gradient(to right, #60a5fa, #f87171 80%);
     color: transparent;
     background-clip: text;
-
+    -webkit-background-clip: text;
+    filter: drop-shadow(0 4px 18px rgba(59, 130, 246, 0.35));
 }
 
 .logoGame {
-    margin-right: 15px;
-    width: 100px;
-    height: 100px;
-
+    margin-right: 18px;
+    width: 90px;
+    height: 90px;
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.6));
 }
 
 .combat {
@@ -33,28 +45,62 @@
     top: 50%;
     left: 50%;
     transform: translate(-44%, -50%);
+    filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.55));
+    animation: fadeIn 1s ease both, float 7s 1s ease-in-out infinite alternate;
 }
 
 .btnsContainer {
     width: 100%;
+    z-index: 1;
     display: flex;
     justify-content: center;
+    gap: 28px;
+    animation: fadeUp 0.8s 0.25s ease both;
 }
 
 .lfgBtn {
-    margin-right: 30px;
+    margin-right: 0;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes float {
+    from {
+        transform: translate(-44%, -50%);
+    }
+
+    to {
+        transform: translate(-44%, -52.5%);
+    }
 }
 
 @media screen and (max-width: 860px) {
     .combat {
         max-width: 560px;
     }
-
 }
 
 @media screen and (max-width: 668px) {
-
-
     .combat {
         max-width: 350px;
     }
@@ -62,15 +108,16 @@
     .logoGame {
         width: 50px;
         height: 50px;
+        margin-right: 12px;
     }
 
-    .titleContainer {
-        font-size: 24px;
-
+    .title {
+        font-size: 26px;
+        letter-spacing: 3px;
     }
 
     .btnsContainer {
         margin-top: 80px;
+        gap: 16px;
     }
-
 }

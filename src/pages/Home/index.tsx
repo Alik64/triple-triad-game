@@ -23,17 +23,20 @@ const Home: React.FC = () => {
           src={logoGame}
           alt="TripleTriad game logo"
         />
-        <h1 className={s.title}>Triple Triad Game</h1>
+        <h1 className={s.title}>Triple Triad</h1>
       </section>
       <section className={s.btnsContainer}>
         <button
           onClick={() => navigate("/rules")}
           className={cn("btn", s.lfgBtn)}
         >
-          <span className="btn_span"></span>See rules
+          See rules
         </button>
-        <button onClick={() => navigate("/game")} className="btn">
-          <span className="btn_span"></span>Let's go
+        <button
+          onClick={() => navigate("/game")}
+          className={cn("btn", "btnPrimary")}
+        >
+          Let's go
         </button>
       </section>
     </div>
