@@ -1,6 +1,7 @@
 import React from "react";
 import { Character } from "../../interfaces";
 import Card from "../Card";
+import { getCardValues } from "../../utils/getCardValues";
 import s from "./Board.module.css";
 
 interface BoardProps {
@@ -22,7 +23,7 @@ const Board: React.FC<BoardProps> = ({ board, onClick }) => {
               className={s.cellCard}
               id={item.id}
               image={item.thumbnail.path}
-              values={item.attacks[1] as number[]}
+              values={getCardValues(item)}
             />
           );
         }

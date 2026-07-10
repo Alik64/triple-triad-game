@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import Modal from "./components/UI/Modal";
 
@@ -6,11 +5,11 @@ import Game from "./pages/Game";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Rules from "./pages/Rules";
-import { isModalOpenSelector, winnerSelector } from "./redux/characterSlice";
+import { useGameStore } from "./store/gameStore";
 
 function App() {
-  const isModalOpen = useSelector(isModalOpenSelector);
-  const winner = useSelector(winnerSelector);
+  const isModalOpen = useGameStore((state) => state.isModalOpen);
+  const winner = useGameStore((state) => state.winner);
 
   return (
     <>

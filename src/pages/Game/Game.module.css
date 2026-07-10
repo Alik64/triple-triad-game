@@ -111,6 +111,11 @@
     text-align: center;
 }
 
+.error {
+    color: rgb(252, 80, 80);
+    text-shadow: 0 0 8px rgba(252, 0, 0, 0.4);
+}
+
 .author a {
     background-image: linear-gradient(to right, blue, red 80%);
     color: transparent;
