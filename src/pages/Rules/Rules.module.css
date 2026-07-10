@@ -25,8 +25,23 @@
     color: #c3cce4;
 }
 
+.wrapper h2 {
+    align-self: flex-start;
+    margin: 26px 0 8px;
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #9ee8ff;
+}
+
+.wrapper p+p {
+    margin-top: 12px;
+}
+
 .wrapper h1 {
-    margin-bottom: 40px;
+    margin-bottom: 14px;
     font-family: var(--font-display);
     font-size: 34px;
     font-weight: 800;

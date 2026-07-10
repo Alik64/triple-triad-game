@@ -9,67 +9,58 @@ const Rules = () => {
   return (
     <div className={s.root}>
       <div className={s.wrapper}>
-        <h1>About game</h1>
+        <h1>How to play</h1>
+
+        <h2>The basics</h2>
         <p>
-          Triple Triad is played on a blank 3-by-3 square game board. Squall
-          plays against one opponent at a time in turn-based gameplay. Both
-          players have five cards in their hand at the start of the game. The
-          absolute simplest explanation of the game is that it plays like the
-          card game, WAR. A number on one player's card will be played against a
-          number on the other player's card. The high number wins the turn.
+          Triple Triad is played on a 3-by-3 board. You (blue) face the enemy
+          AI (red), and each side starts with a hand of five Marvel cards. You
+          always play first, then turns alternate.
         </p>
-        <br />
         <p>
-          Each player is assigned a color at the start of the game, either red
-          or blue. One player's cards will have a red background. The other
-          player's cards will be blue. This is done to indicate both initial
-          ownership of the card, and points as the game continues to progress.
-          Each card of the player's color on the grid is a point. As cards are
-          played and adjacent sides compared, they may change colors to show
-          which player has won the turn and is currently winning the game.
+          On your turn, click a card in your hand to select it — it slides out
+          of the stack — then click any empty cell to place it, even one with
+          no adjacent card. The status bar above the board tells you what to do
+          at every step, and the enemy answers as soon as your move is played.
         </p>
-        <br />
+
+        <h2>Card values</h2>
         <p>
-          When a card changes to the player's color, this is called capturing a
-          card. If it is not their turn, the player cannot capture any cards. A
-          card may change colors multiple times during play. Multiple cards may
-          change color during a turn. Once the grid is filled with cards, the
-          game is determined to be a win/loss or a draw. At this point, the
-          player that has the most cards of their color on the grid wins the
-          game.
+          Every card carries four numbers arranged in a cross in its top-left
+          corner. Each number, from 1 to 10, is the strength of one side of the
+          card: top, right, bottom and left.
         </p>
-        <br />
+
+        <h2>Capturing</h2>
         <p>
-          Each card in this mini-game features four numbers that form a cross in
-          the top left corner. The numbers range from one through 10. Each
-          number in the cross corresponds to a side of the card. Creatures and
-          characters are used as card art. Cards may also have an elemental
-          icon, which is specific to the Elemental rule set, and is not in play
-          unless there are also elemental icons on the grid.
+          When you place a card next to an enemy card, the touching sides are
+          compared. If your side shows the higher number, the enemy card flips
+          to your color — it is captured. A well-placed card can capture
+          several neighbours at once: played in the center, it challenges up to
+          four cards at the same time.
         </p>
-        <br />
         <p>
-          A card may be played anywhere on the Triple Triad grid, including
-          spaces where there is no adjacent card. However, due to the limited
-          number of available spaces on the grid, cards must eventually be
-          played against one another.
+          Only the card being placed can capture. Cards already on the board
+          never flip a newly placed card, even if their touching side is higher
+          — so placing a weak side against a strong enemy card is safe. A
+          captured card is not lost either: it can change colors again later in
+          the game.
         </p>
-        <br />
+
+        <h2>Scoring</h2>
         <p>
-          When one player's card is placed adjacent to the other player's
-          card(s) on the grid, the touching sides are compared, and the high
-          number of each touching side wins that turn. Depending on where on the
-          grid a card is placed, a card may be played against multiple cards at
-          the same time. For instance, if a card is placed in the center space
-          on the grid, each side of the player's card will be compared with the
-          adjacent side of each other card to the top, bottom, left and right,
-          as long as those other cards belong to the opponent.
+          Every card you own is worth one point: cards of your color on the
+          board, plus the cards still in your hand. Both players therefore
+          start at 5–5, and the scores shift with every capture.
         </p>
-        <br />
+
+        <h2>End of the game</h2>
         <p>
-          If the grid is filled with cards, and both players possess an equal
-          number of cards of their color, a Draw will occur.
+          The game ends when the ninth card fills the board. The player with
+          the higher score wins — the last unplayed card still counts as a
+          point for its owner. Equal scores mean a draw.
         </p>
+
         <button
           onClick={() => navigate("/game")}
           className="btn btnPrimary"
