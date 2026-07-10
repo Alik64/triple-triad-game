@@ -104,6 +104,16 @@
     pointer-events: none;
 }
 
+/* the drag-overlay wrapper is sized by dnd-kit to match the source card */
+.dragOverlayCard {
+    height: 100%;
+    max-height: 100%;
+    cursor: grabbing;
+    transform: rotate(3deg) scale(1.04);
+    box-shadow: 0 0 0 3px #60a5fa, 0 0 26px rgba(59, 130, 246, 0.55),
+        0 18px 40px rgba(0, 0, 0, 0.6);
+}
+
 .buttonContainer {
     width: 100%;
     display: flex;

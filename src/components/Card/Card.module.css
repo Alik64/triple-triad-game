@@ -69,6 +69,11 @@
     grid-area: 2 / 1;
 }
 
+/* the original stays dimmed in the hand while its clone follows the pointer */
+.dragging {
+    opacity: 0.35;
+}
+
 .p1 {
     background: linear-gradient(165deg, #60a5fa, #1d4ed8 55%, #172554);
     box-shadow: 0 0 18px rgba(59, 130, 246, 0.45), 0 10px 24px rgba(0, 0, 0, 0.5);

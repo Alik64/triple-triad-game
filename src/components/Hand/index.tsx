@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Character } from "../../interfaces";
 import cn from "classnames";
 
@@ -11,34 +11,31 @@ interface HandProps {
   side: "left" | "right";
   characters: Character[];
   score: number;
+  /** Controlled selection: id of the currently selected card, if any. */
+  activeId?: string | number | null;
   onClick?: (id: string | number | null) => void;
   disabled?: boolean;
   glowing?: boolean;
   loading?: boolean;
+  /** Allow dragging the cards onto the board. */
+  draggable?: boolean;
 }
 
 const Hand: React.FC<HandProps> = ({
   characters,
   side,
+  activeId = null,
   onClick,
   disabled = false,
   score,
   glowing = false,
   loading = false,
+  draggable = false,
 }) => {
-  const [activeId, setActiveId] = useState<string | number | null>(null);
-
-  // drop a stale selection whenever the hand changes (card played, new game)
-  useEffect(() => {
-    setActiveId(null);
-  }, [characters]);
-
   const handleClick = (id: string | number) => {
     if (disabled) return;
     // clicking the selected card again deselects it
-    const next = id === activeId ? null : id;
-    setActiveId(next);
-    onClick && onClick(next);
+    onClick && onClick(id === activeId ? null : id);
   };
 
   return (
@@ -62,6 +59,7 @@ const Hand: React.FC<HandProps> = ({
                 [s.active]: character.id === activeId,
               })}
               onClick={handleClick}
+              draggable={draggable && !disabled}
             />
           ))
         )}

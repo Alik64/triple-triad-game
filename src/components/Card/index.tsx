@@ -1,5 +1,6 @@
 import React from "react";
 import cn from "classnames";
+import { useDraggable } from "@dnd-kit/core";
 import s from "./Card.module.css";
 
 interface CardProps {
@@ -9,6 +10,8 @@ interface CardProps {
   className?: string;
   onClick?: (id: string | number) => void;
   holder?: string;
+  /** Player-hand cards can be dragged onto the board. */
+  draggable?: boolean;
 }
 const Card: React.FC<CardProps> = ({
   id,
@@ -17,14 +20,29 @@ const Card: React.FC<CardProps> = ({
   onClick,
   values,
   holder,
+  draggable = false,
 }) => {
+  // inert when disabled (board cards, enemy hand, the drag-overlay clone)
+  const { setNodeRef, listeners, attributes, isDragging } = useDraggable({
+    id,
+    disabled: !draggable,
+  });
+
   const handleClick: React.MouseEventHandler<HTMLDivElement> = () => {
     onClick && onClick(id);
   };
   return (
     <div
-      className={cn(s.root, className, s[holder as "p1" | "p2"])}
+      ref={draggable ? setNodeRef : undefined}
+      className={cn(s.root, className, s[holder as "p1" | "p2"], {
+        // guard on `draggable`: the overlay clone shares the active id and
+        // would otherwise dim itself too
+        [s.dragging]: draggable && isDragging,
+      })}
       onClick={handleClick}
+      // without touch-action:none the browser scrolls instead of dragging on touch
+      style={draggable ? { touchAction: "none" } : undefined}
+      {...(draggable ? { ...listeners, ...attributes } : {})}
     >
       <div
         className={s.image}
