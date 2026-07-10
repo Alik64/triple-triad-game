@@ -54,7 +54,10 @@
     -webkit-background-clip: text;
 }
 
-.wrapper button {
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
     margin-top: 40px;
     align-self: center;
 }

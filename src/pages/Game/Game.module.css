@@ -107,8 +107,9 @@
 .buttonContainer {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 24px;
+    gap: 16px 24px;
 }
 
 .resetBtn {
@@ -182,6 +183,13 @@
     .status {
         padding: 7px 16px;
         font-size: 10px;
+        letter-spacing: 1.5px;
+    }
+
+    .buttonContainer :global(.btn) {
+        min-width: 120px;
+        height: 42px;
+        font-size: 13px;
         letter-spacing: 1.5px;
     }
 }

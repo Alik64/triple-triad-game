@@ -61,12 +61,17 @@ const Rules = () => {
           point for its owner. Equal scores mean a draw.
         </p>
 
-        <button
-          onClick={() => navigate("/game")}
-          className="btn btnPrimary"
-        >
-          Let's play
-        </button>
+        <div className={s.actions}>
+          <button onClick={() => navigate("/")} className="btn">
+            Home
+          </button>
+          <button
+            onClick={() => navigate("/game")}
+            className="btn btnPrimary"
+          >
+            Let's play
+          </button>
+        </div>
       </div>
     </div>
   );

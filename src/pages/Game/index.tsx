@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Hand from "../../components/Hand";
 import Board from "../../components/Board";
@@ -11,6 +12,7 @@ import useMediaQuery from "../../utils/hooks/useMediaQuery";
 import ModalMobile from "../../components/UI/ModalMobile";
 
 const Game: React.FC = () => {
+  const navigate = useNavigate();
   const player = useGameStore((state) => state.playerCards);
   const enemy = useGameStore((state) => state.enemyCards);
   const board = useGameStore((state) => state.board);
@@ -92,6 +94,12 @@ const Game: React.FC = () => {
       {error && <p className={s.error}>{error}</p>}
 
       <section className={s.buttonContainer}>
+        <button onClick={() => navigate("/")} className="btn">
+          Home
+        </button>
+        <button onClick={() => navigate("/rules")} className="btn">
+          See rules
+        </button>
         <button onClick={initGame} className={cn("btn", s.resetBtn)}>
           Reset game
         </button>
