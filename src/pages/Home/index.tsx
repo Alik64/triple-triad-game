@@ -17,7 +17,6 @@ const Home: React.FC = () => {
   }
   return (
     <div className={s.root}>
-      <img src={combat} className={s.combat} alt="Cap America vs iron man" />
       <section className={s.titleContainer}>
         <img
           className={s.logoGame}
@@ -26,11 +25,9 @@ const Home: React.FC = () => {
         />
         <h1 className={s.title}>Triple Triad</h1>
       </section>
+      <img src={combat} className={s.combat} alt="Cap America vs iron man" />
       <section className={s.btnsContainer}>
-        <button
-          onClick={() => navigate("/rules")}
-          className={cn("btn", s.lfgBtn)}
-        >
+        <button onClick={() => navigate("/rules")} className="btn">
           See rules
         </button>
         <button
