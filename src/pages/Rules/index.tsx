@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import s from "./Rules.module.css";
+import Footer from "../../components/Footer";
 
 const Rules = () => {
   const navigate = useNavigate();
@@ -73,6 +74,7 @@ const Rules = () => {
           </button>
         </div>
       </div>
+      <Footer className={s.footer} />
     </div>
   );
 };

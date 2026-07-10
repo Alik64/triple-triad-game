@@ -1,0 +1,27 @@
+.root {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+}
+
+.root a {
+    font-weight: 700;
+    color: #9ee8ff;
+    transition: color 0.2s ease;
+}
+
+.root a:hover {
+    color: #e0faff;
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 667px) {
+    .root {
+        font-size: 11px;
+    }
+}

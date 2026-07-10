@@ -10,6 +10,7 @@ import cn from "classnames";
 import s from "./Game.module.css";
 import useMediaQuery from "../../utils/hooks/useMediaQuery";
 import ModalMobile from "../../components/UI/ModalMobile";
+import Footer from "../../components/Footer";
 
 const Game: React.FC = () => {
   const navigate = useNavigate();
@@ -104,9 +105,7 @@ const Game: React.FC = () => {
           Reset game
         </button>
       </section>
-      <h5 className={s.author}>
-        Made by <a href="https://www.linkedin.com/in/albert-64/">Albert</a>
-      </h5>
+      <Footer />
     </div>
   );
 };

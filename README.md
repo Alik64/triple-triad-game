@@ -30,3 +30,13 @@ scores shift with every capture.
 The game ends when the ninth card fills the board. The player with the higher
 score wins — the last unplayed card still counts as a point for its owner.
 Equal scores mean a draw.
+
+## Legal
+
+Character data and artwork come from the
+[Marvel Comics API](https://www.marvel.com). Data provided by Marvel. © MARVEL.
+
+This is a **non-commercial fan project**, not affiliated with or endorsed by
+Marvel Entertainment or Square Enix (Triple Triad originates from Final
+Fantasy VIII). All characters and artwork remain the property of their
+respective owners. No ads, no payments, no data collection.

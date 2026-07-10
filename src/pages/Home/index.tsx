@@ -6,6 +6,7 @@ import cn from "classnames";
 import s from "./Home.module.css";
 import useMediaQuery from "../../utils/hooks/useMediaQuery";
 import ModalMobile from "../../components/UI/ModalMobile";
+import Footer from "../../components/Footer";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ const Home: React.FC = () => {
           Let's go
         </button>
       </section>
+      <Footer className={s.footer} />
     </div>
   );
 };

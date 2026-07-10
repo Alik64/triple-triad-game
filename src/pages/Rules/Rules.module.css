@@ -62,6 +62,10 @@
     align-self: center;
 }
 
+.footer {
+    margin-top: 28px;
+}
+
 @keyframes fadeUp {
     from {
         opacity: 0;

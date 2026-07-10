@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import hydra from "./images/Hydra_logo.webp";
 import capAmerica from "./images/capAmerica.png";
 import s from "./NotFound.module.css";
+import Footer from "../../components/Footer";
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const NotFound: React.FC = () => {
           Home page
         </button>
       </section>
+      <Footer />
     </main>
   );
 };
