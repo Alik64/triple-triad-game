@@ -1,9 +1,30 @@
 import React from "react";
 import cn from "classnames";
+import { useDroppable } from "@dnd-kit/core";
 import { Character } from "../../interfaces";
 import Card from "../Card";
 import { getCardValues } from "../../utils/getCardValues";
 import s from "./Board.module.css";
+
+interface CellProps {
+  index: number;
+  onClick: (index: number) => void;
+}
+
+/** An empty board cell: clickable and a drop target for dragged cards. */
+const Cell: React.FC<CellProps> = ({ index, onClick }) => {
+  const { setNodeRef, isOver } = useDroppable({
+    id: `cell-${index}`,
+    data: { index },
+  });
+  return (
+    <div
+      ref={setNodeRef}
+      onClick={() => onClick(index)}
+      className={cn(s.cell, { [s.cellOver]: isOver })}
+    />
+  );
+};
 
 interface BoardProps {
   board: (Character | number)[];
@@ -32,13 +53,7 @@ const Board: React.FC<BoardProps> = ({ board, onClick, highlight = false }) => {
             />
           );
         }
-        return (
-          <div
-            onClick={() => handleClick(index)}
-            key={index}
-            className={s.cell}
-          />
-        );
+        return <Cell key={index} index={index} onClick={handleClick} />;
       })}
     </div>
   );
