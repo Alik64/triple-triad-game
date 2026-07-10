@@ -4,50 +4,50 @@ import cn from "classnames";
 
 import s from "./Hand.module.css";
 import Card from "../Card";
-import { useSelector } from "react-redux";
-import { enemyCardsSelector } from "../../redux/characterSlice";
 import Preloader from "../Preloader";
+import { getCardValues } from "../../utils/getCardValues";
 
-interface HandsProps {
+interface HandProps {
   side: "left" | "right";
   characters: Character[];
+  score: number;
   onClick?: (id: string | number) => void;
   disabled?: boolean;
-  shining?: boolean;
-  score: number;
+  glowing?: boolean;
+  loading?: boolean;
 }
 
-const Hand: React.FC<HandsProps> = ({
+const Hand: React.FC<HandProps> = ({
   characters,
   side,
   onClick,
   disabled = false,
   score,
-  shining,
+  glowing = false,
+  loading = false,
 }) => {
-  const [activeId, setActiveId] = useState<string | number | null>();
+  const [activeId, setActiveId] = useState<string | number | null>(null);
+
   const handleClick = (id: string | number) => {
-    if (!disabled) {
-      setActiveId(id);
-      onClick && onClick(id);
-    }
+    if (disabled) return;
+    setActiveId(id);
+    onClick && onClick(id);
   };
-  const enemyCards = useSelector(enemyCardsSelector);
 
   return (
     <div className={s.root}>
-      <div className={cn(s.hand_content, { [s.shining]: !shining })}>
-        {enemyCards.length === 0 ? (
+      <div className={cn(s.hand_content, { [s.shining]: glowing })}>
+        {loading ? (
           <Preloader />
         ) : (
-          characters?.map((item) => (
+          characters.map((character) => (
             <Card
-              key={item.id}
-              id={item.id}
-              values={item.attacks[1] as number[]}
-              image={item.thumbnail.path}
+              key={character.id}
+              id={character.id}
+              values={getCardValues(character)}
+              image={character.thumbnail.path}
               className={cn(s.card, s[side], {
-                [s.active]: item.id === activeId,
+                [s.active]: character.id === activeId,
               })}
               onClick={handleClick}
             />

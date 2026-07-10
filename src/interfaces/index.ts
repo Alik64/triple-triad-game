@@ -1,7 +1,3 @@
-export interface Marvel {
-  characters: Character[];
-}
-
 export interface Character {
   id: number;
   name: string;
