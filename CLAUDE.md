@@ -17,7 +17,7 @@ Deployment is git-connected: pushing to `main` triggers a Netlify build (setting
 
 ## Architecture
 
-**Game logic lives on an external backend, not in this repo.** The frontend only renders state and sends moves. The backend source is the sibling repo `../triple-triade-api` (Hapi server, `src/server.js`, runs on port 3004; built with `npm run build:dev` then started with `npm start`/`npm run dev`). The deployed copy runs at `https://ttg-api.onrender.com/api/v1/marvel`; override the base URL with the `REACT_APP_API_URL` env var to hit a local backend. Three endpoints:
+**Game logic lives on an external backend, not in this repo.** The frontend only renders state and sends moves. The backend source is the sibling repo `../triple-triade-api` (Hapi server, `src/server.js`, runs on port 3004; built with `npm run build:dev` then started with `npm start`/`npm run dev`). The deployed copy runs at `https://ttg-api.onrender.com/api/v1/marvel`. `.env.development` points `npm start` at the local backend (`http://localhost:3004/api/v1/marvel`) so local dev never hits Render — start the API first, or override per shell (`REACT_APP_API_URL=https://ttg-api.onrender.com/api/v1/marvel npm start`) to use the deployed one. Production builds ignore `.env.development` and keep the Render URL. Three endpoints:
 
 - GET `/create` — the player's 5-card hand
 - POST `/game/start` — the enemy hand, generated from the player's hand so the two never share cards
