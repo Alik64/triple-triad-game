@@ -21,6 +21,7 @@ const Cell: React.FC<CellProps> = ({ index, onClick }) => {
     <div
       ref={setNodeRef}
       onClick={() => onClick(index)}
+      data-testid={`cell-${index}`}
       className={cn(s.cell, { [s.cellOver]: isOver })}
     />
   );
