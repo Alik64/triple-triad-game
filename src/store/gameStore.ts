@@ -17,7 +17,6 @@ interface GameState {
   playerScore: number;
   enemyScore: number;
   winner: Winner;
-  isInitializing: boolean;
   isLoading: boolean;
   isModalOpen: boolean;
   error: string;
@@ -38,7 +37,6 @@ const initialState = {
   playerScore: 0,
   enemyScore: 0,
   winner: "" as Winner,
-  isInitializing: false,
   isLoading: false,
   isModalOpen: false,
   error: "",
