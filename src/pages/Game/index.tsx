@@ -5,7 +5,8 @@ import {
   DragOverlay,
   DragStartEvent,
   DragEndEvent,
-  PointerSensor,
+  MouseSensor,
+  TouchSensor,
   pointerWithin,
   useSensor,
   useSensors,
@@ -45,10 +46,15 @@ const Game: React.FC = () => {
   const [draggedCard, setDraggedCard] = useState<Character | null>(null);
   const matches = useMediaQuery("(min-width: 667px)");
 
-  // the activation distance lets plain clicks through, so the
-  // select-then-click-a-cell flow keeps working alongside drag and drop
+  // the activation constraints let plain clicks and taps through, so the
+  // select-then-click-a-cell flow keeps working alongside drag and drop;
+  // on touch a short hold starts the drag, otherwise the browser
+  // hijacks the gesture for scrolling / text selection
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
+    useSensor(MouseSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(TouchSensor, {
+      activationConstraint: { delay: 200, tolerance: 8 },
+    })
   );
 
   useEffect(() => {

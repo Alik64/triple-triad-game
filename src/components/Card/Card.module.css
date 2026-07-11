@@ -1,5 +1,9 @@
 .root {
     position: relative;
+    /* a long press must start a drag, not select text or pop the iOS callout */
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
     width: 100%;
     height: 220px;
     padding: 3px;
