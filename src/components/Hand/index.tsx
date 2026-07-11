@@ -4,7 +4,6 @@ import cn from "classnames";
 
 import s from "./Hand.module.css";
 import Card from "../Card";
-import Preloader from "../Preloader";
 import { getCardValues } from "../../utils/getCardValues";
 
 interface HandProps {
@@ -16,7 +15,6 @@ interface HandProps {
   onClick?: (id: string | number | null) => void;
   disabled?: boolean;
   glowing?: boolean;
-  loading?: boolean;
   /** Allow dragging the cards onto the board. */
   draggable?: boolean;
 }
@@ -29,7 +27,6 @@ const Hand: React.FC<HandProps> = ({
   disabled = false,
   score,
   glowing = false,
-  loading = false,
   draggable = false,
 }) => {
   const handleClick = (id: string | number) => {
@@ -46,23 +43,19 @@ const Hand: React.FC<HandProps> = ({
           [s.disabled]: disabled,
         })}
       >
-        {loading ? (
-          <Preloader />
-        ) : (
-          characters.map((character) => (
-            <Card
-              key={character.id}
-              id={character.id}
-              values={getCardValues(character)}
-              image={character.thumbnail.path}
-              className={cn(s.card, s[side], {
-                [s.active]: character.id === activeId,
-              })}
-              onClick={handleClick}
-              draggable={draggable && !disabled}
-            />
-          ))
-        )}
+        {characters.map((character) => (
+          <Card
+            key={character.id}
+            id={character.id}
+            values={getCardValues(character)}
+            image={character.thumbnail.path}
+            className={cn(s.card, s[side], {
+              [s.active]: character.id === activeId,
+            })}
+            onClick={handleClick}
+            draggable={draggable && !disabled}
+          />
+        ))}
       </div>
       <div className={cn(s.score, s[side])}>
         <span className={s.scoreLabel}>

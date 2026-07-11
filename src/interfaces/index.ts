@@ -1,13 +1,14 @@
 export interface Character {
   id: number;
   name: string;
-  description: string;
   thumbnail: Thumbnail;
-  resourceURI: string;
-  wiki: string;
-  urlCharacters: string;
   attacks: Array<number[] | number>;
-  values: Values;
+  /** Legacy Marvel API fields — absent from the trimmed local catalog. */
+  description?: string;
+  resourceURI?: string;
+  wiki?: string;
+  urlCharacters?: string;
+  values?: Values;
   holder?: string;
 }
 

@@ -1,43 +1,28 @@
 import { create } from "zustand";
 import { Character } from "../interfaces";
-import { getCardValues } from "../utils/getCardValues";
+import { dealPlayerHand, dealEnemyHand, playGame } from "../engine/localApi";
+import { EngineBoard, EngineCell, Owner, isCard } from "../engine/solver";
 
-const API_URL =
-  process.env.REACT_APP_API_URL || "https://ttg-api.onrender.com/api/v1/marvel";
-
-type Holder = "p1" | "p2";
 type Winner = "" | "blue" | "red" | "draw";
 
-/** Board cell as the server returns it. Empty cells are numbers. */
-type ServerCell = { poke: Character; holder: Holder } | number;
 /** Board cell as the UI consumes it: the card flattened with its holder. */
 export type BoardCell = Character | number;
 
-interface TurnResponse {
-  board: ServerCell[];
-  oldBoard: ServerCell[];
-  move: { poke: Character } | null;
-  hands: {
-    p1: { pokes: unknown[] };
-    p2: { pokes: unknown[] };
-  };
-}
-
 interface GameState {
   board: BoardCell[];
-  serverBoard: ServerCell[];
+  /** Raw engine format, passed back verbatim on the next turn. */
+  serverBoard: EngineBoard;
   playerCards: Character[];
   enemyCards: Character[];
   playerScore: number;
   enemyScore: number;
   winner: Winner;
-  isInitializing: boolean;
   isLoading: boolean;
   isModalOpen: boolean;
   error: string;
   /** Bumped on every restart so a pending turn from a dead game gets dropped. */
   gameId: number;
-  initGame: () => Promise<void>;
+  initGame: () => void;
   playTurn: (cardId: string | number, cellIndex: number) => Promise<void>;
   closeModal: () => void;
 }
@@ -46,34 +31,24 @@ const EMPTY_BOARD: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 const initialState = {
   board: [...EMPTY_BOARD] as BoardCell[],
-  serverBoard: [...EMPTY_BOARD] as ServerCell[],
+  serverBoard: [...EMPTY_BOARD] as EngineBoard,
   playerCards: [] as Character[],
   enemyCards: [] as Character[],
   playerScore: 0,
   enemyScore: 0,
   winner: "" as Winner,
-  isInitializing: false,
   isLoading: false,
   isModalOpen: false,
   error: "",
 };
 
-const toBoardCell = (cell: ServerCell): BoardCell =>
-  typeof cell === "object" ? { ...cell.poke, holder: cell.holder } : cell;
+const toBoardCell = (cell: EngineCell): BoardCell =>
+  isCard(cell) ? { ...cell.poke, holder: cell.holder } : cell;
 
-const countHolder = (board: ServerCell[], holder: Holder): number =>
-  board.filter((cell) => typeof cell === "object" && cell.holder === holder)
-    .length;
+const countHolder = (board: EngineBoard, holder: Owner): number =>
+  board.filter((cell) => isCard(cell) && cell.holder === holder).length;
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-
-const post = async <T>(path: string, body: object): Promise<T> => {
-  const response = await fetch(`${API_URL}${path}`, {
-    method: "POST",
-    body: JSON.stringify(body),
-  });
-  return response.json();
-};
 
 export const useGameStore = create<GameState>()((set, get) => ({
   ...initialState,
@@ -81,36 +56,20 @@ export const useGameStore = create<GameState>()((set, get) => ({
 
   closeModal: () => set({ isModalOpen: false }),
 
-  initGame: async () => {
-    const gameId = get().gameId + 1;
-    set({ ...initialState, gameId, isInitializing: true });
-    try {
-      const player: { data: Character[] } = await fetch(
-        `${API_URL}/create`
-      ).then((res) => res.json());
+  initGame: () => {
+    // the engine is local and synchronous: hands are dealt instantly
+    const playerCards = dealPlayerHand();
+    const enemyCards = dealEnemyHand(playerCards);
 
-      // the enemy hand is generated from the player's, to exclude his cards
-      const enemy: { data: Character[] } = await post("/game/start", {
-        characters: player.data,
-      });
-
-      if (get().gameId !== gameId) return; // a newer restart won meanwhile
-
-      // every card you own (in hand or on the board) is worth one point
-      set({
-        playerCards: player.data,
-        enemyCards: enemy.data,
-        playerScore: player.data.length,
-        enemyScore: enemy.data.length,
-        isInitializing: false,
-      });
-    } catch {
-      if (get().gameId !== gameId) return;
-      set({
-        error: "Could not reach the game server. Try again later.",
-        isInitializing: false,
-      });
-    }
+    // every card you own (in hand or on the board) is worth one point
+    set({
+      ...initialState,
+      gameId: get().gameId + 1,
+      playerCards,
+      enemyCards,
+      playerScore: playerCards.length,
+      enemyScore: enemyCards.length,
+    });
   },
 
   playTurn: async (cardId, cellIndex) => {
@@ -122,7 +81,7 @@ export const useGameStore = create<GameState>()((set, get) => ({
       return;
     }
 
-    // optimistic placement; captures arrive with the server response
+    // optimistic placement; captures follow with the engine result
     set({
       isLoading: true,
       board: board.map((cell, index) =>
@@ -132,18 +91,11 @@ export const useGameStore = create<GameState>()((set, get) => ({
     });
 
     try {
-      const turn = await post<TurnResponse>("/game", {
+      const turn = playGame({
         hands: { p1: playerCards, p2: enemyCards },
-        currentPlayer: "p1",
         board: serverBoard,
-        move: {
-          id: playerCard.id,
-          hits: getCardValues(playerCard),
-          position: cellIndex + 1, // the server expects a 1-based position
-        },
+        move: { id: playerCard.id, position: cellIndex },
       });
-
-      if (get().gameId !== gameId) return; // the game was restarted meanwhile
 
       // the player's move with its captures applied
       set({ board: turn.oldBoard.map(toBoardCell), serverBoard: turn.board });
@@ -173,7 +125,7 @@ export const useGameStore = create<GameState>()((set, get) => ({
 
       // let the player's captures show before the enemy answers
       await delay(500);
-      if (get().gameId !== gameId) return;
+      if (get().gameId !== gameId) return; // the game was restarted meanwhile
 
       const enemyId = turn.move.poke.id;
       const remainingEnemyCards = enemyCards.filter(
@@ -189,7 +141,7 @@ export const useGameStore = create<GameState>()((set, get) => ({
       });
     } catch {
       set({
-        error: "The game server did not answer. Try again.",
+        error: "Something went wrong in the game engine. Reset the game.",
         isLoading: false,
       });
     }

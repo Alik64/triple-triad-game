@@ -12,25 +12,28 @@ Deployment is git-connected: pushing to `main` triggers a Netlify build (setting
 
 - `npm start` — dev server
 - `npm run build` — production build
-- `npm test` — Jest in watch mode via react-scripts; run a single file with `npm test -- Card` or a single test with `npm test -- -t "test name"` (no test files currently exist)
+- `npm test` — Jest in watch mode via react-scripts; run a single file with `npm test -- engine` or a single test with `npm test -- -t "test name"`. CI form: `CI=true npm test -- --watchAll=false`. Tests live in [src/engine/engine.test.ts](src/engine/engine.test.ts)
 - No standalone lint script; ESLint (`react-app` config) runs through react-scripts during start/build
 
 ## Architecture
 
-**Game logic lives on an external backend, not in this repo.** The frontend only renders state and sends moves. The backend source is the sibling repo `../triple-triade-api` (Hapi server, `src/server.js`, runs on port 3004; built with `npm run build:dev` then started with `npm start`/`npm run dev`). The deployed copy runs at `https://ttg-api.onrender.com/api/v1/marvel`. `.env.development` points `npm start` at the local backend (`http://localhost:3004/api/v1/marvel`) so local dev never hits Render — start the API first, or override per shell (`REACT_APP_API_URL=https://ttg-api.onrender.com/api/v1/marvel npm start`) to use the deployed one. Production builds ignore `.env.development` and keep the Render URL. Three endpoints:
+**The whole game runs in the browser — there is no backend.** Everything lives in [src/engine/](src/engine/):
 
-- GET `/create` — the player's 5-card hand
-- POST `/game/start` — the enemy hand, generated from the player's hand so the two never share cards
-- POST `/game` — the full game state + player's move; the server computes captures, plays the enemy (AI) move, and returns the updated board
+- [solver.ts](src/engine/solver.ts) — minimax AI (`solve`, depth auto-capped at 4–5) and the capture rule (`putCard`: a placed card flips an adjacent enemy card when its facing value strictly beats the neighbor's opposing value)
+- [player.ts](src/engine/player.ts) — orchestration: hand/board normalisation, move application, AI-hand generation (strength-matched to the player's deck, never sharing its cards)
+- [localApi.ts](src/engine/localApi.ts) — facade with the three entry points the store uses: `dealPlayerHand()`, `dealEnemyHand(playerHand)`, `playGame({hands, board, move})` (positions are 0-based)
+- [characters.json](src/engine/characters.json) — 628-character catalog, a trimmed snapshot of the Marvel API (dead since late 2025); regenerate-from-source lives in git history, but the source repo `../triple-triade-api` is no longer needed at runtime
 
-**Single Zustand store** ([src/store/gameStore.ts](src/store/gameStore.ts)) holds all game state and the API calls (`initGame`, `playTurn`, `closeModal`). Two parallel board representations, both 9-element arrays where numbers = empty cells:
+The engine is a TypeScript port of the old backend (sibling repo `../triple-triade-api`, formerly deployed on Render); it calls cards "pokes" — a heritage of its Pokémon origins. Keep engine behavior aligned with its tests when touching it.
 
-- `serverBoard` — raw server format (`{poke, holder}` objects), sent back verbatim in the next `/game` request
-- `board` — UI format, server items flattened to `{...poke, holder}` (a `Character` with `holder`)
+**Single Zustand store** ([src/store/gameStore.ts](src/store/gameStore.ts)) holds all game state and the game actions (`initGame`, `playTurn`, `closeModal`). Two parallel board representations, both 9-element arrays where numbers = empty cells:
 
-The server calls cards "pokes". `holder` is `"p1"` (player, blue) or `"p2"` (enemy, red) and drives card coloring via the matching CSS-module class in [src/components/Card/index.tsx](src/components/Card/index.tsx).
+- `serverBoard` — raw engine format (`EngineCard` objects), passed back verbatim to the next `playGame` call
+- `board` — UI format, engine cells flattened to `{...poke, holder}` (a `Character` with `holder`)
 
-**Turn flow** (`playTurn`): player selects a card in `Hand` → clicks an empty `Board` cell → optimistic placement (`holder: "p1"`, card removed from hand) → POST `/game` (position is `index + 1`, 1-based) → the response's `oldBoard` is applied (player's captures) → 500ms pause → the response's `board` is applied (AI's move) and scores update. `isLoading` stays true through the whole sequence, which is what blocks double moves. When the response's `move === null` the game is over: `winner` is set (`"blue"` / `"red"` / `"draw"`) and the end-of-game modal opens (rendered globally in [src/App.tsx](src/App.tsx)).
+`holder` is `"p1"` (player, blue) or `"p2"` (enemy, red) and drives card coloring via the matching CSS-module class in [src/components/Card/index.tsx](src/components/Card/index.tsx).
+
+**Turn flow** (`playTurn`): player selects (click) or drags a card from `Hand` → an empty `Board` cell → optimistic placement (`holder: "p1"`, card removed from hand) → `playGame()` → the result's `oldBoard` is applied (player's captures) → 500ms pause → the result's `board` is applied (AI's move) and scores update. `isLoading` stays true through the whole sequence, which is what blocks double moves. When the result's `move === null` the game is over: `winner` is set (`"blue"` / `"red"` / `"draw"`) and the end-of-game modal opens (rendered globally in [src/App.tsx](src/App.tsx)).
 
 **Scoring rule**: every card you own is a point — board cells with your `holder` plus cards still in hand. The game therefore starts at 5–5, and `initGame`/"Reset game"/"Try again" all restart by resetting the store (no page reload).
 
@@ -40,4 +43,4 @@ The server calls cards "pokes". `holder` is `"p1"` (player, blue) or `"p2"` (ene
 
 ## Gotchas
 
-- The backend on Render free tier may cold-start; the first card fetch can be slow (the `Preloader` in `Hand` covers this).
+- Card images are hotlinked from Marvel's CDN (`i.annihil.us`, `portrait_uncanny` variants) — the only remaining external dependency. The catalog is a frozen snapshot: the Marvel API it came from no longer exists, so broken images can only be fixed by editing [characters.json](src/engine/characters.json).

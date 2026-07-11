@@ -34,7 +34,6 @@ const Game: React.FC = () => {
   const playerScore = useGameStore((state) => state.playerScore);
   const enemyScore = useGameStore((state) => state.enemyScore);
   const isLoading = useGameStore((state) => state.isLoading);
-  const isInitializing = useGameStore((state) => state.isInitializing);
   const error = useGameStore((state) => state.error);
   const initGame = useGameStore((state) => state.initGame);
   const playTurn = useGameStore((state) => state.playTurn);
@@ -85,10 +84,7 @@ const Game: React.FC = () => {
     setChosenCardId(null);
   };
 
-  const isBusy = isLoading || isInitializing;
-  const status = isInitializing
-    ? "Dealing the cards"
-    : isLoading
+  const status = isLoading
     ? "Enemy is thinking"
     : chosenCardId !== null
     ? "Choose a cell on the board"
@@ -102,11 +98,11 @@ const Game: React.FC = () => {
       <div
         className={cn(s.status, {
           [s.statusEnemy]: isLoading,
-          [s.statusBusy]: isBusy,
+          [s.statusBusy]: isLoading,
         })}
         role="status"
       >
-        {isBusy && <span className={s.spinner} aria-hidden="true" />}
+        {isLoading && <span className={s.spinner} aria-hidden="true" />}
         <span className={s.statusText}>{status}</span>
       </div>
 
@@ -123,7 +119,6 @@ const Game: React.FC = () => {
             characters={enemy}
             disabled
             score={enemyScore}
-            loading={isInitializing}
             glowing={isLoading}
           />
 
@@ -137,8 +132,7 @@ const Game: React.FC = () => {
             side="right"
             characters={player}
             score={playerScore}
-            loading={isInitializing}
-            glowing={!isBusy}
+            glowing={!isLoading}
             disabled={isLoading}
             activeId={chosenCardId}
             onClick={setChosenCardId}
